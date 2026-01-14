@@ -31,6 +31,7 @@
     "@tanstack/react-router-ssr-query": "^1.149.3",
     "@tanstack/react-start": "^1.149.4",
     "@tanstack/router-plugin": "^1.149.3",
+    "@vercel/analytics": "^1.6.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "html2canvas-pro": "1.6.4",

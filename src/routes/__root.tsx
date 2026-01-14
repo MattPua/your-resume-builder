@@ -1,6 +1,7 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "../components/ThemeProvider";
 import { TooltipProvider } from "../components/ui/tooltip";
 
@@ -133,6 +134,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 							]}
 						/>
 						<Scripts />
+						<Analytics />
 					</TooltipProvider>
 				</ThemeProvider>
 			</body>

@@ -1,7 +1,11 @@
 import {
 	ChevronsUpDown,
 	Download,
+	FileCode,
+	FileDown,
 	FileJson,
+	FileText,
+	Loader2,
 	MoreVertical,
 	RotateCcw,
 	Upload,
@@ -10,7 +14,9 @@ import { Button } from "./ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
+	DropdownMenuGroup,
 	DropdownMenuItem,
+	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
@@ -25,22 +31,28 @@ interface ActionsMenuProps {
 	fileInputRef: React.RefObject<HTMLInputElement | null>;
 	onImportJSON: () => void;
 	onExportJSON: () => void;
+	onExportMarkdown: () => void;
+	onExportText: () => void;
 	onExportPDF: () => void;
 	onClearAll: () => void;
 	onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	onToggleAllSections: () => void;
 	allSectionsCollapsed: boolean;
+	isExporting?: boolean;
 }
 
 export const ActionsMenu = ({
 	fileInputRef,
 	onImportJSON,
 	onExportJSON,
+	onExportMarkdown,
+	onExportText,
 	onExportPDF,
 	onClearAll,
 	onFileChange,
 	onToggleAllSections,
 	allSectionsCollapsed,
+	isExporting,
 }: ActionsMenuProps) => {
 	return (
 		<div className="flex items-center gap-3">
@@ -57,10 +69,15 @@ export const ActionsMenu = ({
 				variant="default"
 				size="sm"
 				className="h-9 px-4"
-				aria-label="Export PDF"
+				aria-label="Export to PDF"
+				disabled={isExporting}
 			>
-				<Download className="size-4" />
-				Export PDF
+				{isExporting ? (
+					<Loader2 className="size-4 animate-spin" />
+				) : (
+					<Download className="size-4" />
+				)}
+				{isExporting ? "Exporting..." : "Export to PDF"}
 			</Button>
 			<div className="flex items-center -space-x-px">
 				<Tooltip>
@@ -101,23 +118,46 @@ export const ActionsMenu = ({
 						</TooltipContent>
 					</Tooltip>
 					<DropdownMenuContent align="end" className="w-48">
-					<DropdownMenuItem onClick={onImportJSON} className="cursor-pointer">
-						<Upload className="mr-2 size-4" />
-						Import JSON
-					</DropdownMenuItem>
-					<DropdownMenuItem onClick={onExportJSON} className="cursor-pointer">
-						<FileJson className="mr-2 size-4" />
-						Export JSON
-					</DropdownMenuItem>
-					<DropdownMenuSeparator />
-					<DropdownMenuItem
-						onClick={onClearAll}
-						className="cursor-pointer text-red-600 focus:text-red-600 dark:text-red-400 dark:focus:text-red-400"
-					>
-						<RotateCcw className="mr-2 size-4" />
-						Reset resume
-					</DropdownMenuItem>
-				</DropdownMenuContent>
+						<DropdownMenuGroup>
+							<DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70">
+								Import
+							</DropdownMenuLabel>
+							<DropdownMenuItem onClick={onImportJSON} className="cursor-pointer">
+								<Upload className="mr-2 size-4" />
+								Import JSON
+							</DropdownMenuItem>
+						</DropdownMenuGroup>
+						
+						<DropdownMenuSeparator />
+						
+						<DropdownMenuGroup>
+							<DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70">
+								Export
+							</DropdownMenuLabel>
+							<DropdownMenuItem onClick={onExportJSON} className="cursor-pointer">
+								<FileCode className="mr-2 size-4" />
+								Export JSON
+							</DropdownMenuItem>
+							<DropdownMenuItem onClick={onExportMarkdown} className="cursor-pointer">
+								<FileDown className="mr-2 size-4" />
+								Export Markdown
+							</DropdownMenuItem>
+							<DropdownMenuItem onClick={onExportText} className="cursor-pointer">
+								<FileText className="mr-2 size-4" />
+								Export Text
+							</DropdownMenuItem>
+						</DropdownMenuGroup>
+						
+						<DropdownMenuSeparator />
+						
+						<DropdownMenuItem
+							onClick={onClearAll}
+							className="cursor-pointer text-red-600 focus:text-red-600 dark:text-red-400 dark:focus:text-red-400"
+						>
+							<RotateCcw className="mr-2 size-4" />
+							Reset resume
+						</DropdownMenuItem>
+					</DropdownMenuContent>
 			</DropdownMenu>
 			</div>
 		</div>

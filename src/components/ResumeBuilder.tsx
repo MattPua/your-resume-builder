@@ -140,8 +140,11 @@ export const ResumeBuilder = () => {
 		handleExportPDF,
 		handleClearAll,
 		handleExportJSON,
+		handleExportMarkdown,
+		handleExportText,
 		handleImportJSON,
 		handleFileChange,
+		isExporting,
 	} = useResumeActions({
 		resumeData,
 		previewRef,
@@ -235,10 +238,13 @@ export const ResumeBuilder = () => {
 							allSectionsCollapsed={allSectionsCollapsed}
 							handleImportJSON={handleImportJSON}
 							handleExportJSON={handleExportJSON}
+							handleExportMarkdown={handleExportMarkdown}
+							handleExportText={handleExportText}
 							handleExportPDF={handleExportPDF}
 							handleClearAll={handleClearAll}
 							handleFileChange={handleFileChange}
 							handleToggleAllSections={handleToggleAllSections}
+							isExporting={isExporting}
 						/>
 
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

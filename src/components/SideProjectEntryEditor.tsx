@@ -123,13 +123,13 @@ export const SideProjectEntryEditor = ({
             />
             <div className="grid grid-cols-2 gap-3">
               <TextInput
-                label="Start Date (Year)"
+                label="Start Date"
                 value={entry.startDate}
                 onChange={(value) => handleFieldChange('startDate', value)}
                 placeholder="2020"
               />
               <TextInput
-                label="End Date (Year or 'Now')"
+                label="End Date"
                 value={entry.endDate}
                 onChange={(value) => handleFieldChange('endDate', value)}
                 placeholder={`${currentYear} or Now`}

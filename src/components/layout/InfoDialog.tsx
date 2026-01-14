@@ -35,7 +35,7 @@ export const InfoDialog = () => {
 				</TooltipContent>
 			</Tooltip>
 			<DialogContent className="sm:max-w-[500px]">
-				<DialogHeader>
+				<DialogHeader className="text-left sm:text-left">
 					<DialogTitle className="flex items-center gap-2">
 						<ShieldCheck className="size-5 text-green-600 dark:text-green-500" />
 						How it works & Privacy

@@ -1,6 +1,8 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import type { ResumeData } from "../types/resume";
 import { exportToPDF } from "../lib/pdfExport";
+import { convertToMarkdown } from "../lib/markdownExport";
+import { convertToPlainText } from "../lib/textExport";
 
 interface UseResumeActionsProps {
 	resumeData: ResumeData;
@@ -16,6 +18,7 @@ export const useResumeActions = ({
 	resetResumeData,
 }: UseResumeActionsProps) => {
 	const fileInputRef = useRef<HTMLInputElement>(null);
+	const [isExporting, setIsExporting] = useState(false);
 
 	const generateFilename = (extension: string) => {
 		const name = resumeData.name.trim() || "resume";
@@ -35,6 +38,7 @@ export const useResumeActions = ({
 	const handleExportPDF = async () => {
 		if (previewRef.current) {
 			try {
+				setIsExporting(true);
 				const filename = generateFilename("pdf");
 
 				// Temporarily remove scale transform for export
@@ -58,6 +62,8 @@ export const useResumeActions = ({
 			} catch (error) {
 				alert("Failed to export PDF. Please try again.");
 				console.error(error);
+			} finally {
+				setIsExporting(false);
 			}
 		}
 	};
@@ -79,6 +85,32 @@ export const useResumeActions = ({
 		const link = document.createElement("a");
 		link.href = url;
 		link.download = generateFilename("json");
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		URL.revokeObjectURL(url);
+	};
+
+	const handleExportMarkdown = () => {
+		const markdown = convertToMarkdown(resumeData);
+		const dataBlob = new Blob([markdown], { type: "text/markdown" });
+		const url = URL.createObjectURL(dataBlob);
+		const link = document.createElement("a");
+		link.href = url;
+		link.download = generateFilename("md");
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+		URL.revokeObjectURL(url);
+	};
+
+	const handleExportText = () => {
+		const text = convertToPlainText(resumeData);
+		const dataBlob = new Blob([text], { type: "text/plain" });
+		const url = URL.createObjectURL(dataBlob);
+		const link = document.createElement("a");
+		link.href = url;
+		link.download = generateFilename("txt");
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
@@ -122,7 +154,10 @@ export const useResumeActions = ({
 		handleExportPDF,
 		handleClearAll,
 		handleExportJSON,
+		handleExportMarkdown,
+		handleExportText,
 		handleImportJSON,
 		handleFileChange,
+		isExporting,
 	};
 };

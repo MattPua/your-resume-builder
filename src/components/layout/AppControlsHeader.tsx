@@ -6,10 +6,13 @@ interface AppControlsHeaderProps {
 	allSectionsCollapsed: boolean;
 	handleImportJSON: () => void;
 	handleExportJSON: () => void;
+	handleExportMarkdown: () => void;
+	handleExportText: () => void;
 	handleExportPDF: () => void;
 	handleClearAll: () => void;
 	handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleToggleAllSections: () => void;
+	isExporting?: boolean;
 }
 
 export const AppControlsHeader = ({
@@ -17,10 +20,13 @@ export const AppControlsHeader = ({
 	allSectionsCollapsed,
 	handleImportJSON,
 	handleExportJSON,
+	handleExportMarkdown,
+	handleExportText,
 	handleExportPDF,
 	handleClearAll,
 	handleFileChange,
 	handleToggleAllSections,
+	isExporting,
 }: AppControlsHeaderProps) => {
 	return (
 		<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 p-6 mb-8 bg-white dark:bg-gray-800/40 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm backdrop-blur-sm">
@@ -38,11 +44,14 @@ export const AppControlsHeader = ({
 					fileInputRef={fileInputRef}
 					onImportJSON={handleImportJSON}
 					onExportJSON={handleExportJSON}
+					onExportMarkdown={handleExportMarkdown}
+					onExportText={handleExportText}
 					onExportPDF={handleExportPDF}
 					onClearAll={handleClearAll}
 					onFileChange={handleFileChange}
 					onToggleAllSections={handleToggleAllSections}
 					allSectionsCollapsed={allSectionsCollapsed}
+					isExporting={isExporting}
 				/>
 			</div>
 		</div>
