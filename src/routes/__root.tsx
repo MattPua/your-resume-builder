@@ -41,7 +41,7 @@ export const Route = createRootRoute({
 			},
 			{
 				property: "og:image",
-				content: "/logo512.png",
+				content: "https://your-resume-builder.com/og-image.jpeg",
 			},
 			{
 				name: "twitter:card",
@@ -57,7 +57,7 @@ export const Route = createRootRoute({
 			},
 			{
 				name: "twitter:image",
-				content: "/logo512.png",
+				content: "https://your-resume-builder.com/og-image.jpeg",
 			},
 		],
 		links: [
