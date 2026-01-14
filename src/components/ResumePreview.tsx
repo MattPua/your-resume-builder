@@ -99,7 +99,7 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
     >
       {hasHeader && (
         <div data-pdf-header>
-          <HeaderPreview data={data} />
+          <HeaderPreview data={data} backgroundColor={backgroundColor} />
         </div>
       )}
 

@@ -5,6 +5,8 @@ interface AppControlsHeaderProps {
 	fileInputRef: React.RefObject<HTMLInputElement | null>;
 	allSectionsCollapsed: boolean;
 	handleImportJSON: () => void;
+	handleImportMarkdown: () => void;
+	handleImportMarkdownText: () => void;
 	handleExportJSON: () => void;
 	handleExportMarkdown: () => void;
 	handleExportText: () => void;
@@ -20,6 +22,8 @@ export const AppControlsHeader = ({
 	fileInputRef,
 	allSectionsCollapsed,
 	handleImportJSON,
+	handleImportMarkdown,
+	handleImportMarkdownText,
 	handleExportJSON,
 	handleExportMarkdown,
 	handleExportText,
@@ -45,6 +49,8 @@ export const AppControlsHeader = ({
 				<ActionsMenu
 					fileInputRef={fileInputRef}
 					onImportJSON={handleImportJSON}
+					onImportMarkdown={handleImportMarkdown}
+					onImportMarkdownText={handleImportMarkdownText}
 					onExportJSON={handleExportJSON}
 					onExportMarkdown={handleExportMarkdown}
 					onExportText={handleExportText}

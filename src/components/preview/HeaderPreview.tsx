@@ -2,9 +2,12 @@ import type { ResumeData } from "../../types/resume";
 
 interface HeaderPreviewProps {
 	data: ResumeData;
+	backgroundColor?: string;
 }
 
-export const HeaderPreview = ({ data }: HeaderPreviewProps) => {
+export const HeaderPreview = ({ data, backgroundColor }: HeaderPreviewProps) => {
+	const linkColor = backgroundColor || "#0891b2";
+
 	return (
 		<section className="mb-1 pb-1.5">
 			<div className="grid gap-4" style={{ gridTemplateColumns: "1fr 2fr" }}>
@@ -26,8 +29,8 @@ export const HeaderPreview = ({ data }: HeaderPreviewProps) => {
 								<span className="font-medium">Email:</span>{" "}
 								<a
 									href={`mailto:${data.email}`}
-									className="text-cyan-600 hover:text-cyan-700 underline"
-									style={{ color: "#0891b2" }}
+									className="hover:opacity-80 underline transition-opacity"
+									style={{ color: linkColor }}
 								>
 									{data.email}
 								</a>
@@ -40,8 +43,8 @@ export const HeaderPreview = ({ data }: HeaderPreviewProps) => {
 									href={data.website}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="text-cyan-600 hover:text-cyan-700 underline"
-									style={{ color: "#0891b2" }}
+									className="hover:opacity-80 underline transition-opacity"
+									style={{ color: linkColor }}
 								>
 									{data.website}
 								</a>
@@ -61,8 +64,8 @@ export const HeaderPreview = ({ data }: HeaderPreviewProps) => {
 									href={data.github}
 									target="_blank"
 									rel="noopener noreferrer"
-									className="text-cyan-600 hover:text-cyan-700 underline"
-									style={{ color: "#0891b2" }}
+									className="hover:opacity-80 underline transition-opacity"
+									style={{ color: linkColor }}
 								>
 									{data.github}
 								</a>

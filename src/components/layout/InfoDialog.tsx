@@ -34,7 +34,7 @@ export const InfoDialog = () => {
 					<p>How it works & Privacy</p>
 				</TooltipContent>
 			</Tooltip>
-			<DialogContent className="sm:max-w-[500px]">
+			<DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
 				<DialogHeader className="text-left sm:text-left">
 					<DialogTitle className="flex items-center gap-2">
 						<ShieldCheck className="size-5 text-green-600 dark:text-green-500" />

@@ -25,6 +25,7 @@ import { AppControlsHeader } from "./layout/AppControlsHeader";
 import { AppNavigation } from "./layout/AppNavigation";
 import { ScrollToTopButton } from "./layout/ScrollToTopButton";
 import { PreviewPane } from "./preview/PreviewPane";
+import { ImportMarkdownDialog } from "./ImportMarkdownDialog";
 import logo from "./ui/logo.jpeg";
 
 const DEFAULT_SECTION_ORDER: (
@@ -68,6 +69,7 @@ export const ResumeBuilder = () => {
 	const [isBackgroundOpen, setIsBackgroundOpen] = useState(true);
 	const [isSideProjectsOpen, setIsSideProjectsOpen] = useState(true);
 	const [isPersonalOpen, setIsPersonalOpen] = useState(true);
+	const [isImportMarkdownOpen, setIsImportMarkdownOpen] = useState(false);
 
 	const sectionOrder = resumeData.sectionOrder || DEFAULT_SECTION_ORDER;
 
@@ -144,6 +146,8 @@ export const ResumeBuilder = () => {
 		handleExportText,
 		handlePrint,
 		handleImportJSON,
+		handleImportMarkdown,
+		handleImportMarkdownText,
 		handleFileChange,
 		isExporting,
 	} = useResumeActions({
@@ -214,6 +218,7 @@ export const ResumeBuilder = () => {
 							the page to continue.
 						</p>
 						<button
+							type="button"
 							onClick={() => window.location.reload()}
 							className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
 						>
@@ -238,6 +243,8 @@ export const ResumeBuilder = () => {
 							fileInputRef={fileInputRef}
 							allSectionsCollapsed={allSectionsCollapsed}
 							handleImportJSON={handleImportJSON}
+							handleImportMarkdown={handleImportMarkdown}
+							handleImportMarkdownText={() => setIsImportMarkdownOpen(true)}
 							handleExportJSON={handleExportJSON}
 							handleExportMarkdown={handleExportMarkdown}
 							handleExportText={handleExportText}
@@ -296,6 +303,11 @@ export const ResumeBuilder = () => {
 				</main>
 
 				<ScrollToTopButton isVisible={showScrollTop} onClick={scrollToTop} />
+				<ImportMarkdownDialog
+					open={isImportMarkdownOpen}
+					onOpenChange={setIsImportMarkdownOpen}
+					onImport={handleImportMarkdownText}
+				/>
 				</div>
 			</div>
 		</ErrorBoundary>

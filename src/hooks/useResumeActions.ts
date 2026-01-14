@@ -3,11 +3,12 @@ import type { ResumeData } from "../types/resume";
 import { exportToPDF } from "../lib/pdfExport";
 import { convertToMarkdown } from "../lib/markdownExport";
 import { convertToPlainText } from "../lib/textExport";
+import { parseMarkdownToResumeData } from "../lib/markdownImport";
 
 interface UseResumeActionsProps {
 	resumeData: ResumeData;
 	previewRef: React.RefObject<HTMLDivElement | null>;
-	importResumeData: (data: ResumeData) => void;
+	importResumeData: (data: ResumeData | Partial<ResumeData>) => void;
 	resetResumeData: () => void;
 }
 
@@ -122,30 +123,53 @@ export const useResumeActions = ({
 	};
 
 	const handleImportJSON = () => {
-		fileInputRef.current?.click();
+		if (fileInputRef.current) {
+			fileInputRef.current.accept = ".json,application/json";
+			fileInputRef.current.click();
+		}
+	};
+
+	const handleImportMarkdown = () => {
+		if (fileInputRef.current) {
+			fileInputRef.current.accept = ".md,text/markdown";
+			fileInputRef.current.click();
+		}
 	};
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (!file) return;
 
+		const isJson = file.name.endsWith(".json") || file.type === "application/json";
+		const isMarkdown = file.name.endsWith(".md") || file.type === "text/markdown";
+
 		const reader = new FileReader();
 		reader.onload = (event) => {
+			const content = event.target?.result as string;
 			try {
-				const jsonData = JSON.parse(event.target?.result as string);
+				let data: ResumeData | Partial<ResumeData>;
+				if (isJson) {
+					data = JSON.parse(content);
+				} else if (isMarkdown) {
+					data = parseMarkdownToResumeData(content);
+				} else {
+					throw new Error("Unsupported file type");
+				}
+
 				if (
 					window.confirm(
 						"This will replace your current resume data. Are you sure you want to continue?",
 					)
 				) {
-					importResumeData(jsonData as ResumeData);
+					importResumeData(data);
 					alert("Resume data imported successfully!");
 				}
 			} catch (error) {
+				const type = isJson ? "JSON" : isMarkdown ? "Markdown" : "file";
 				alert(
-					"Failed to import JSON file. Please make sure it is a valid JSON file.",
+					`Failed to import ${type} file. Please make sure it is a valid ${type} file.`,
 				);
-				console.error("Failed to import JSON:", error);
+				console.error(`Failed to import ${type}:`, error);
 			}
 		};
 		reader.readAsText(file);
@@ -162,6 +186,23 @@ export const useResumeActions = ({
 		handleExportText,
 		handlePrint,
 		handleImportJSON,
+		handleImportMarkdown,
+		handleImportMarkdownText: (markdown: string) => {
+			try {
+				const data = parseMarkdownToResumeData(markdown);
+				if (
+					window.confirm(
+						"This will replace your current resume data. Are you sure you want to continue?",
+					)
+				) {
+					importResumeData(data);
+					alert("Resume data imported successfully!");
+				}
+			} catch (error) {
+				alert("Failed to parse markdown. Please check the format.");
+				console.error("Failed to import markdown text:", error);
+			}
+		},
 		handleFileChange,
 		isExporting,
 	};

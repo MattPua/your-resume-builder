@@ -3,7 +3,6 @@ import {
 	Download,
 	FileCode,
 	FileDown,
-	FileJson,
 	FileText,
 	Loader2,
 	MoreVertical,
@@ -31,6 +30,8 @@ import {
 interface ActionsMenuProps {
 	fileInputRef: React.RefObject<HTMLInputElement | null>;
 	onImportJSON: () => void;
+	onImportMarkdown: () => void;
+	onImportMarkdownText: () => void;
 	onExportJSON: () => void;
 	onExportMarkdown: () => void;
 	onExportText: () => void;
@@ -46,6 +47,8 @@ interface ActionsMenuProps {
 export const ActionsMenu = ({
 	fileInputRef,
 	onImportJSON,
+	onImportMarkdown,
+	onImportMarkdownText,
 	onExportJSON,
 	onExportMarkdown,
 	onExportText,
@@ -62,10 +65,10 @@ export const ActionsMenu = ({
 			<Input
 				ref={fileInputRef}
 				type="file"
-				accept=".json,application/json"
+				accept=".json,application/json,.md,text/markdown"
 				onChange={onFileChange}
 				className="hidden"
-				aria-label="Import JSON file"
+				aria-label="Import file"
 			/>
 			<Button
 				onClick={onExportPDF}
@@ -127,7 +130,15 @@ export const ActionsMenu = ({
 							</DropdownMenuLabel>
 							<DropdownMenuItem onClick={onImportJSON} className="cursor-pointer">
 								<Upload className="mr-2 size-4" />
-								Import JSON
+								Import from JSON
+							</DropdownMenuItem>
+							<DropdownMenuItem onClick={onImportMarkdown} className="cursor-pointer">
+								<FileDown className="mr-2 size-4 rotate-180" />
+								Import from Markdown file
+							</DropdownMenuItem>
+							<DropdownMenuItem onClick={onImportMarkdownText} className="cursor-pointer">
+								<FileText className="mr-2 size-4" />
+								Import from Markdown text
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
 						

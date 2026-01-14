@@ -280,7 +280,7 @@ export const useLocalStorage = () => {
     }
   }
 
-  const importResumeData = (data: ResumeData) => {
+  const importResumeData = (data: ResumeData | Partial<ResumeData>) => {
     // Validate and migrate imported data
     const migrated: ResumeData = {
       ...defaultResumeData,
