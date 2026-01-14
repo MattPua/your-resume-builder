@@ -265,21 +265,6 @@ export const ResumeBuilder = () => {
 							/>
 						</section>
 					</div>
-
-					{/* Hidden SEO Content */}
-					<div className="sr-only">
-						<h2>Your Resume Builder Features</h2>
-						<ul>
-							<li>Focus on content, we handle the layout automatically with Your Resume Builder</li>
-							<li>No more fighting with MS Word or Canva templates</li>
-							<li>Create professional resumes with ease</li>
-							<li>Export to high-quality PDF format</li>
-							<li>Privacy-focused: all data stays in your browser</li>
-							<li>Customizable sections: Experience, Education, Skills, and more</li>
-							<li>Drag and drop section reordering</li>
-							<li>Modern templates and typography control</li>
-						</ul>
-					</div>
 				</main>
 
 				<ScrollToTopButton isVisible={showScrollTop} onClick={scrollToTop} />
