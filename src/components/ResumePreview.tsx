@@ -1,4 +1,4 @@
-import { FileText, Sparkles, Layout } from 'lucide-react'
+import { FileText, Sparkles } from 'lucide-react'
 import type { ResumeData } from '../types/resume'
 import { BackgroundPreview } from './preview/BackgroundPreview'
 import { ExperiencePreview } from './preview/ExperiencePreview'
@@ -45,19 +45,20 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
     (showSkills && data.skills && data.skills.trim() !== "")
 
   const backgroundColor = data.sectionHeaderBackgroundColor || "#3b82f6"
+  const textColor = data.sectionHeaderTextColor || "#ffffff"
 
   const renderSection = (sectionId: string) => {
     if (sectionId === "experience") {
       return (
         <div key="experience" data-pdf-section="experience">
-          <ExperiencePreview entries={visibleExperience} title={data.sectionTitles?.experience} backgroundColor={backgroundColor} />
+          <ExperiencePreview entries={visibleExperience} title={data.sectionTitles?.experience} backgroundColor={backgroundColor} textColor={textColor} />
         </div>
       )
     }
     if (sectionId === "sideProjects") {
       return (
         <div key="sideProjects" data-pdf-section="sideProjects">
-          <SideProjectsPreview entries={visibleSideProjects} title={data.sectionTitles?.sideProjects} backgroundColor={backgroundColor} />
+          <SideProjectsPreview entries={visibleSideProjects} title={data.sectionTitles?.sideProjects} backgroundColor={backgroundColor} textColor={textColor} />
         </div>
       )
     }
@@ -65,7 +66,7 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
       if (!showPersonal) return null
       return (
         <div key="personal" data-pdf-section="personal">
-          <PersonalPreview personal={data.personal} title={data.sectionTitles?.personal} backgroundColor={backgroundColor} />
+          <PersonalPreview personal={data.personal} title={data.sectionTitles?.personal} backgroundColor={backgroundColor} textColor={textColor} />
         </div>
       )
     }
@@ -78,6 +79,7 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
             showSkills={showSkills}
             title={data.sectionTitles?.background}
             backgroundColor={backgroundColor}
+            textColor={textColor}
           />
         </div>
       )

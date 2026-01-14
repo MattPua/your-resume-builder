@@ -17,16 +17,16 @@ import { Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useResumeActions } from "../hooks/useResumeActions";
+import { EmptyState } from "./EmptyState";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { SectionList } from "./SectionList";
-import { HeaderSection } from "./sections/HeaderSection";
-import { SiteHeader } from "./layout/SiteHeader";
+import { ImportMarkdownDialog } from "./ImportMarkdownDialog";
 import { AppControlsHeader } from "./layout/AppControlsHeader";
 import { AppNavigation } from "./layout/AppNavigation";
 import { ScrollToTopButton } from "./layout/ScrollToTopButton";
+import { SiteHeader } from "./layout/SiteHeader";
 import { PreviewPane } from "./preview/PreviewPane";
-import { ImportMarkdownDialog } from "./ImportMarkdownDialog";
-import { EmptyState } from "./EmptyState";
+import { SectionList } from "./SectionList";
+import { HeaderSection } from "./sections/HeaderSection";
 import logo from "./ui/logo.jpeg";
 
 const DEFAULT_SECTION_ORDER: (
@@ -200,7 +200,9 @@ export const ResumeBuilder = () => {
 						</h1>
 						<div className="flex items-center gap-2 text-primary/60 dark:text-primary/40">
 							<Loader2 className="size-4 animate-spin" />
-							<span className="text-sm font-medium">Preparing your workspace...</span>
+							<span className="text-sm font-medium">
+								Preparing your workspace...
+							</span>
 						</div>
 					</div>
 				</div>
@@ -290,58 +292,61 @@ export const ResumeBuilder = () => {
 							isExporting={isExporting}
 						/>
 
-					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-						<section className="space-y-6 no-print" aria-label="Resume Editor">
-							<HeaderSection
-								resumeData={resumeData}
-								updateResumeData={updateResumeData}
-								isOpen={isHeaderOpen}
-								onOpenChange={setIsHeaderOpen}
-							/>
-
-							<DndContext
-								sensors={sensors}
-								collisionDetection={closestCenter}
-								onDragEnd={handleDragEnd}
+						<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+							<section
+								className="space-y-6 no-print"
+								aria-label="Resume Editor"
 							>
-								<SortableContext
-									items={sectionOrder}
-									strategy={verticalListSortingStrategy}
+								<HeaderSection
+									resumeData={resumeData}
+									updateResumeData={updateResumeData}
+									isOpen={isHeaderOpen}
+									onOpenChange={setIsHeaderOpen}
+								/>
+
+								<DndContext
+									sensors={sensors}
+									collisionDetection={closestCenter}
+									onDragEnd={handleDragEnd}
 								>
-									<SectionList
-										resumeData={resumeData}
-										updateResumeData={updateResumeData}
-										sectionOrder={sectionOrder}
-										isExperienceOpen={isExperienceOpen}
-										setIsExperienceOpen={setIsExperienceOpen}
-										isBackgroundOpen={isBackgroundOpen}
-										setIsBackgroundOpen={setIsBackgroundOpen}
-										isSideProjectsOpen={isSideProjectsOpen}
-										setIsSideProjectsOpen={setIsSideProjectsOpen}
-										isPersonalOpen={isPersonalOpen}
-										setIsPersonalOpen={setIsPersonalOpen}
-									/>
-								</SortableContext>
-							</DndContext>
-						</section>
+									<SortableContext
+										items={sectionOrder}
+										strategy={verticalListSortingStrategy}
+									>
+										<SectionList
+											resumeData={resumeData}
+											updateResumeData={updateResumeData}
+											sectionOrder={sectionOrder}
+											isExperienceOpen={isExperienceOpen}
+											setIsExperienceOpen={setIsExperienceOpen}
+											isBackgroundOpen={isBackgroundOpen}
+											setIsBackgroundOpen={setIsBackgroundOpen}
+											isSideProjectsOpen={isSideProjectsOpen}
+											setIsSideProjectsOpen={setIsSideProjectsOpen}
+											isPersonalOpen={isPersonalOpen}
+											setIsPersonalOpen={setIsPersonalOpen}
+										/>
+									</SortableContext>
+								</DndContext>
+							</section>
 
-						<section aria-label="Resume Preview">
-							<PreviewPane
-								resumeData={resumeData}
-								updateResumeData={updateResumeData}
-								previewRef={previewRef}
-								fonts={FONTS}
-							/>
-						</section>
-					</div>
-				</main>
+							<section aria-label="Resume Preview">
+								<PreviewPane
+									resumeData={resumeData}
+									updateResumeData={updateResumeData}
+									previewRef={previewRef}
+									fonts={FONTS}
+								/>
+							</section>
+						</div>
+					</main>
 
-				<ScrollToTopButton isVisible={showScrollTop} onClick={scrollToTop} />
-				<ImportMarkdownDialog
-					open={isImportMarkdownOpen}
-					onOpenChange={setIsImportMarkdownOpen}
-					onImport={handleImportMarkdownText}
-				/>
+					<ScrollToTopButton isVisible={showScrollTop} onClick={scrollToTop} />
+					<ImportMarkdownDialog
+						open={isImportMarkdownOpen}
+						onOpenChange={setIsImportMarkdownOpen}
+						onImport={handleImportMarkdownText}
+					/>
 				</div>
 			</div>
 		</ErrorBoundary>

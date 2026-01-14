@@ -7,17 +7,19 @@ interface SideProjectsPreviewProps {
 	entries: SideProjectEntry[];
 	title?: string;
 	backgroundColor?: string;
+	textColor?: string;
 }
 
 export const SideProjectsPreview = ({
 	entries,
 	title = "Side Projects",
 	backgroundColor,
+	textColor,
 }: SideProjectsPreviewProps) => {
 	if (entries.length === 0) return null;
 
 	return (
-		<SectionPreview title={title} backgroundColor={backgroundColor}>
+		<SectionPreview title={title} backgroundColor={backgroundColor} textColor={textColor}>
 			<div>
 				{entries.map((entry, index) => (
 					<div key={index} className="mb-0">

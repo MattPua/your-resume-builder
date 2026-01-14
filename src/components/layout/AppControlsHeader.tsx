@@ -36,7 +36,7 @@ export const AppControlsHeader = ({
 		<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 p-6 mb-8 bg-white dark:bg-gray-800/40 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm backdrop-blur-sm no-print">
 			<div className="flex flex-col gap-1">
 				<p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-					Focus on your content, we'll handle the professional layout.
+					Focus on your content, we'll handle the layout.
 				</p>
 				<p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
 					<ShieldCheck className="size-3.5 text-green-600 dark:text-green-500" />

@@ -69,5 +69,6 @@ export interface ResumeData {
 	};
 	sectionOrder?: ("experience" | "background" | "sideProjects" | "personal")[];
 	sectionHeaderBackgroundColor?: string;
+	sectionHeaderTextColor?: string;
 	fontFamily?: string;
 }

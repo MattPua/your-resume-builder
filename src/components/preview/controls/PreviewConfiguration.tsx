@@ -20,6 +20,8 @@ interface Font {
 interface PreviewConfigurationProps {
 	sectionHeaderBackgroundColor: string;
 	onBackgroundColorChange: (color: string) => void;
+	sectionHeaderTextColor: string;
+	onTextColorChange: (color: string) => void;
 	fontFamily: string;
 	onFontFamilyChange: (font: string) => void;
 	fonts: Font[];
@@ -28,6 +30,8 @@ interface PreviewConfigurationProps {
 export const PreviewConfiguration = ({
 	sectionHeaderBackgroundColor,
 	onBackgroundColorChange,
+	sectionHeaderTextColor,
+	onTextColorChange,
 	fontFamily,
 	onFontFamilyChange,
 	fonts,
@@ -43,12 +47,29 @@ export const PreviewConfiguration = ({
 							value={sectionHeaderBackgroundColor || "#3b82f6"}
 							onChange={(e) => onBackgroundColorChange(e.target.value)}
 							className="absolute inset-0 w-full h-full cursor-pointer rounded-sm border border-gray-200 dark:border-gray-700 p-0 overflow-hidden bg-transparent"
-							aria-label="Section Header Color"
+							aria-label="Section Header Background Color"
 						/>
 					</div>
 				</TooltipTrigger>
 				<TooltipContent>
-					<p>Section Header Color</p>
+					<p>Section Header Background Color</p>
+				</TooltipContent>
+			</Tooltip>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<div className="relative size-6">
+						<input
+							id="section-header-text-color"
+							type="color"
+							value={sectionHeaderTextColor || "#ffffff"}
+							onChange={(e) => onTextColorChange(e.target.value)}
+							className="absolute inset-0 w-full h-full cursor-pointer rounded-sm border border-gray-200 dark:border-gray-700 p-0 overflow-hidden bg-transparent"
+							aria-label="Section Header Text Color"
+						/>
+					</div>
+				</TooltipTrigger>
+				<TooltipContent>
+					<p>Section Header Text Color</p>
 				</TooltipContent>
 			</Tooltip>
 			<DropdownMenu>

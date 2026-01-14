@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { ErrorBoundary } from "../ErrorBoundary";
 import { ResumePreview } from "../ResumePreview";
-import { ResumeData } from "../../types/resume";
+import type { ResumeData } from "../../types/resume";
 import { ZoomControls } from "./controls/ZoomControls";
 import { PreviewConfiguration } from "./controls/PreviewConfiguration";
 
@@ -51,10 +51,16 @@ export const PreviewPane = ({
 						</h2>
 						<PreviewConfiguration
 							sectionHeaderBackgroundColor={
-								resumeData.sectionHeaderBackgroundColor || "#1e40af"
+								resumeData.sectionHeaderBackgroundColor || "#3b82f6"
 							}
 							onBackgroundColorChange={(color) =>
 								updateResumeData({ sectionHeaderBackgroundColor: color })
+							}
+							sectionHeaderTextColor={
+								resumeData.sectionHeaderTextColor || "#ffffff"
+							}
+							onTextColorChange={(color) =>
+								updateResumeData({ sectionHeaderTextColor: color })
 							}
 							fontFamily={resumeData.fontFamily || fonts[0].value}
 							onFontFamilyChange={(font) => updateResumeData({ fontFamily: font })}

@@ -8,11 +8,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "../ui/dialog";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "../ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export const InfoDialog = () => {
 	return (
@@ -42,8 +38,9 @@ export const InfoDialog = () => {
 					</DialogTitle>
 					<DialogDescription className="pt-4 space-y-4 text-gray-600 dark:text-gray-400">
 						<p>
-							<strong>Your Resume Builder</strong> is designed to be <strong>100% private and secure</strong>.
-							All your data stays right in your browser.
+							<strong>Your Resume Builder</strong> is designed to be{" "}
+							<strong>100% private and secure</strong>. All your data stays
+							right in your browser.
 						</p>
 						<div className="grid gap-4 pt-2">
 							<div className="space-y-1">
@@ -51,8 +48,8 @@ export const InfoDialog = () => {
 									✨ Content First
 								</h4>
 								<p className="text-sm">
-									Focus on your content while we handle the professional layout.
-									No more fighting with MS Word formatting or Canva templates.
+									Focus on your content while we handle the layout. No more
+									fighting with MS Word formatting or Canva templates.
 								</p>
 							</div>
 							<div className="space-y-1">
@@ -60,8 +57,8 @@ export const InfoDialog = () => {
 									🔒 Total Privacy
 								</h4>
 								<p className="text-sm">
-									Nothing is ever uploaded to a server. We don't collect, see, or
-									store any of your personal information.
+									Nothing is ever uploaded to a server. We don't collect, see,
+									or store any of your personal information.
 								</p>
 							</div>
 							<div className="space-y-1">
@@ -96,8 +93,8 @@ export const InfoDialog = () => {
 									✨ Free & Open Source
 								</h4>
 								<p className="text-sm">
-									No accounts, no subscriptions, no ads. Just a simple, open source tool to
-									help you build a professional resume.
+									No accounts, no subscriptions, no ads. Just a simple, open
+									source tool to help you build a professional resume.
 								</p>
 							</div>
 						</div>

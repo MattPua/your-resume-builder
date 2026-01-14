@@ -9,6 +9,7 @@ interface BackgroundPreviewProps {
 	showSkills: boolean;
 	title?: string;
 	backgroundColor?: string;
+	textColor?: string;
 }
 
 export const BackgroundPreview = ({
@@ -17,6 +18,7 @@ export const BackgroundPreview = ({
 	showSkills,
 	title = "Background",
 	backgroundColor,
+	textColor,
 }: BackgroundPreviewProps) => {
 	const hasEducation = education.length > 0;
 	const hasSkills = showSkills && skills;
@@ -24,7 +26,7 @@ export const BackgroundPreview = ({
 	if (!hasEducation && !hasSkills) return null;
 
 	return (
-		<SectionPreview title={title} backgroundColor={backgroundColor}>
+		<SectionPreview title={title} backgroundColor={backgroundColor} textColor={textColor}>
 			{hasEducation && (
 				<div className="mb-0.5">
 					{education.map((entry, index) => (

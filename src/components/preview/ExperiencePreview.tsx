@@ -7,13 +7,14 @@ interface ExperiencePreviewProps {
   entries: ExperienceEntry[]
   title?: string
   backgroundColor?: string
+  textColor?: string
 }
 
-export const ExperiencePreview = ({ entries, title = "Experience", backgroundColor }: ExperiencePreviewProps) => {
+export const ExperiencePreview = ({ entries, title = "Experience", backgroundColor, textColor }: ExperiencePreviewProps) => {
   if (entries.length === 0) return null
 
   return (
-    <SectionPreview title={title} backgroundColor={backgroundColor}>
+    <SectionPreview title={title} backgroundColor={backgroundColor} textColor={textColor}>
       <div>
         {entries.map((entry, index) => (
           <div key={index} className="mb-0">
