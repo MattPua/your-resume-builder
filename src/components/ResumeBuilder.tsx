@@ -14,7 +14,18 @@ import {
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp, ZoomIn, ZoomOut } from "lucide-react";
+import {
+	ArrowUp,
+	Briefcase,
+	Contact,
+	FileText,
+	Folder,
+	GraduationCap,
+	Menu,
+	RotateCcw,
+	ZoomIn,
+	ZoomOut,
+} from "lucide-react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useResumeActions } from "../hooks/useResumeActions";
 import { ActionsMenu } from "./ActionsMenu";
@@ -23,6 +34,12 @@ import { ResumePreview } from "./ResumePreview";
 import { SectionList } from "./SectionList";
 import { HeaderSection } from "./sections/HeaderSection";
 import { Button } from "./ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 const DEFAULT_SECTION_ORDER: (
 	| "experience"
@@ -44,6 +61,7 @@ export const ResumeBuilder = () => {
 	const [scale, setScale] = useState(1);
 	const [zoomLevel, setZoomLevel] = useState(1);
 	const [showScrollTop, setShowScrollTop] = useState(false);
+	const [activeSection, setActiveSection] = useState<string>("header");
 	const [isHeaderOpen, setIsHeaderOpen] = useState(true);
 	const [isExperienceOpen, setIsExperienceOpen] = useState(true);
 	const [isBackgroundOpen, setIsBackgroundOpen] = useState(true);
@@ -75,8 +93,22 @@ export const ResumeBuilder = () => {
 		setZoomLevel((prev) => Math.max(prev - 0.1, 0.5));
 	};
 
+	const handleResetZoom = () => {
+		setZoomLevel(1);
+	};
+
 	const scrollToTop = () => {
 		window.scrollTo({ top: 0, behavior: "smooth" });
+	};
+
+	const scrollToSection = (sectionId: string) => {
+		const element = document.getElementById(`section-${sectionId}`);
+		if (element) {
+			const yOffset = -100; // Offset for sticky headers
+			const y =
+				element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+			window.scrollTo({ top: y, behavior: "smooth" });
+		}
 	};
 
 	useEffect(() => {
@@ -86,6 +118,34 @@ export const ResumeBuilder = () => {
 		window.addEventListener("scroll", handleScroll);
 		return () => window.removeEventListener("scroll", handleScroll);
 	}, []);
+
+	useEffect(() => {
+		const options = {
+			root: null,
+			rootMargin: "-150px 0px -50% 0px", // Detect when section is in the top half
+			threshold: 0,
+		};
+
+		const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+			for (const entry of entries) {
+				if (entry.isIntersecting) {
+					const id = entry.target.id.replace("section-", "");
+					setActiveSection(id);
+				}
+			}
+		};
+
+		const observer = new IntersectionObserver(handleIntersect, options);
+
+		// Observe all sections
+		const sections = ["header", ...sectionOrder];
+		for (const sectionId of sections) {
+			const element = document.getElementById(`section-${sectionId}`);
+			if (element) observer.observe(element);
+		}
+
+		return () => observer.disconnect();
+	}, [sectionOrder]);
 
 	const {
 		fileInputRef,
@@ -173,33 +233,105 @@ export const ResumeBuilder = () => {
 				</div>
 			}
 		>
-			<div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-				<div className="container mx-auto px-4 py-8">
+			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex relative">
+				{/* Desktop Section Navigation */}
+				<div className="hidden lg:flex fixed left-4 top-1/2 -translate-y-1/2 flex-col gap-2 z-50">
+					<div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-xl border border-gray-200 dark:border-gray-700 p-2 flex flex-col gap-2">
+						<Button
+							variant={activeSection === "header" ? "default" : "ghost"}
+							size="icon"
+							onClick={() => scrollToSection("header")}
+							className="rounded-full size-10 transition-all duration-200"
+							title="Header & Contact"
+						>
+							<Contact className="size-5" />
+						</Button>
+						{sectionOrder.map((sectionId) => {
+							const icons = {
+								experience: Briefcase,
+								background: GraduationCap,
+								sideProjects: Folder,
+								personal: FileText,
+							};
+							const titles = {
+								experience: "Experience",
+								background: "Education & Skills",
+								sideProjects: "Side Projects",
+								personal: "Personal",
+							};
+							const Icon = icons[sectionId as keyof typeof icons];
+							const isActive = activeSection === sectionId;
+
+							return (
+								<Button
+									key={sectionId}
+									variant={isActive ? "default" : "ghost"}
+									size="icon"
+									onClick={() => scrollToSection(sectionId)}
+									className="rounded-full size-10 transition-all duration-200"
+									title={titles[sectionId as keyof typeof titles]}
+								>
+									<Icon className="size-5" />
+								</Button>
+							);
+						})}
+					</div>
+				</div>
+
+				{/* Mobile Section Navigation */}
+				<div className="lg:hidden fixed left-8 bottom-8 z-50">
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button
+								size="icon"
+								className="rounded-full size-12 shadow-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<Menu className="size-6" />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent side="right" align="end" className="w-56">
+							<DropdownMenuItem
+								onClick={() => scrollToSection("header")}
+								className={activeSection === "header" ? "bg-accent" : ""}
+							>
+								<Contact className="size-4 mr-2" />
+								<span>Header & Contact</span>
+							</DropdownMenuItem>
+							{sectionOrder.map((sectionId) => {
+								const icons = {
+									experience: Briefcase,
+									background: GraduationCap,
+									sideProjects: Folder,
+									personal: FileText,
+								};
+								const titles = {
+									experience: "Experience",
+									background: "Education & Skills",
+									sideProjects: "Side Projects",
+									personal: "Personal",
+								};
+								const Icon = icons[sectionId as keyof typeof icons];
+								return (
+									<DropdownMenuItem
+										key={sectionId}
+										onClick={() => scrollToSection(sectionId)}
+										className={activeSection === sectionId ? "bg-accent" : ""}
+									>
+										<Icon className="size-4 mr-2" />
+										<span>{titles[sectionId as keyof typeof titles]}</span>
+									</DropdownMenuItem>
+								);
+							})}
+						</DropdownMenuContent>
+					</DropdownMenu>
+				</div>
+
+				<div className="flex-1 lg:pl-20 px-4 py-8">
 					<div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
 						<div className="flex items-center gap-4">
 							<h1 className="text-3xl font-bold text-gray-900 dark:text-white">
 								Resume Builder
 							</h1>
-							<div className="flex items-center gap-2">
-								<label
-									htmlFor="section-header-color"
-									className="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap"
-								>
-									Section Header Color:
-								</label>
-								<input
-									id="section-header-color"
-									type="color"
-									value={resumeData.sectionHeaderBackgroundColor || "#1e40af"}
-									onChange={(e) =>
-										updateResumeData({
-											sectionHeaderBackgroundColor: e.target.value,
-										})
-									}
-									className="size-10 cursor-pointer rounded border border-gray-300 dark:border-gray-600"
-									title="Select section header background color"
-								/>
-							</div>
 						</div>
 						<ActionsMenu
 							fileInputRef={fileInputRef}
@@ -251,16 +383,42 @@ export const ResumeBuilder = () => {
 						<div className="lg:sticky lg:top-8 lg:h-[calc(100vh-4rem)]">
 							<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 h-full flex flex-col">
 								<div className="flex items-center justify-between mb-2">
-									<h2 className="text-lg font-semibold text-gray-900 dark:text-white leading-tight">
-										Preview
-									</h2>
-									<div className="flex items-center gap-2">
+									<div className="flex items-center gap-3">
+										<h2 className="text-lg font-semibold text-gray-900 dark:text-white leading-tight">
+											Preview
+										</h2>
+										<div className="flex items-center gap-1.5">
+											<input
+												id="section-header-color"
+												type="color"
+												value={resumeData.sectionHeaderBackgroundColor || "#1e40af"}
+												onChange={(e) =>
+													updateResumeData({
+														sectionHeaderBackgroundColor: e.target.value,
+													})
+												}
+												className="size-6 cursor-pointer rounded-sm border border-gray-200 dark:border-gray-700 p-0 overflow-hidden"
+												title="Section Header Color"
+											/>
+										</div>
+									</div>
+									<div className="flex items-center -space-x-px">
+										<Button
+											variant="outline"
+											size="icon"
+											onClick={handleResetZoom}
+											disabled={zoomLevel === 1}
+											className="size-8 rounded-r-none z-10"
+											title="Reset zoom"
+										>
+											<RotateCcw className="size-4" />
+										</Button>
 										<Button
 											variant="outline"
 											size="icon"
 											onClick={handleZoomOut}
 											disabled={zoomLevel <= 0.5}
-											className="size-8"
+											className="size-8 rounded-none z-10"
 											title="Zoom out"
 										>
 											<ZoomOut className="size-4" />
@@ -270,7 +428,7 @@ export const ResumeBuilder = () => {
 											size="icon"
 											onClick={handleZoomIn}
 											disabled={zoomLevel >= 2}
-											className="size-8"
+											className="size-8 rounded-l-none z-10"
 											title="Zoom in"
 										>
 											<ZoomIn className="size-4" />

@@ -47,24 +47,37 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
 
   const renderSection = (sectionId: string) => {
     if (sectionId === "experience") {
-      return <ExperiencePreview key="experience" entries={visibleExperience} title={data.sectionTitles?.experience} backgroundColor={backgroundColor} />
+      return (
+        <div key="experience" data-pdf-section="experience">
+          <ExperiencePreview entries={visibleExperience} title={data.sectionTitles?.experience} backgroundColor={backgroundColor} />
+        </div>
+      )
     }
     if (sectionId === "sideProjects") {
-      return <SideProjectsPreview key="sideProjects" entries={visibleSideProjects} title={data.sectionTitles?.sideProjects} backgroundColor={backgroundColor} />
+      return (
+        <div key="sideProjects" data-pdf-section="sideProjects">
+          <SideProjectsPreview entries={visibleSideProjects} title={data.sectionTitles?.sideProjects} backgroundColor={backgroundColor} />
+        </div>
+      )
     }
     if (sectionId === "personal") {
-      return <PersonalPreview key="personal" personal={data.personal} title={data.sectionTitles?.personal} backgroundColor={backgroundColor} />
+      return (
+        <div key="personal" data-pdf-section="personal">
+          <PersonalPreview personal={data.personal} title={data.sectionTitles?.personal} backgroundColor={backgroundColor} />
+        </div>
+      )
     }
     if (sectionId === "background") {
       return (
-        <BackgroundPreview
-          key="background"
-          education={visibleEducation}
-          skills={data.skills}
-          showSkills={showSkills}
-          title={data.sectionTitles?.background}
-          backgroundColor={backgroundColor}
-        />
+        <div key="background" data-pdf-section="background">
+          <BackgroundPreview
+            education={visibleEducation}
+            skills={data.skills}
+            showSkills={showSkills}
+            title={data.sectionTitles?.background}
+            backgroundColor={backgroundColor}
+          />
+        </div>
       )
     }
     return null
@@ -81,9 +94,15 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
         color: '#111827',
       }}
     >
-      {hasHeader && <HeaderPreview data={data} />}
+      {hasHeader && (
+        <div data-pdf-header>
+          <HeaderPreview data={data} />
+        </div>
+      )}
 
-      {sectionOrder.map((sectionId) => renderSection(sectionId))}
+      <div data-pdf-sections-container className="bg-white">
+        {sectionOrder.map((sectionId) => renderSection(sectionId))}
+      </div>
 
       {!hasContent && (
         <div className="text-center text-gray-400 py-12">

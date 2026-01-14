@@ -3,7 +3,7 @@ import {
 	Download,
 	FileJson,
 	MoreVertical,
-	Trash2,
+	RotateCcw,
 	Upload,
 } from "lucide-react";
 import { Button } from "./ui/button";
@@ -48,31 +48,44 @@ export const ActionsMenu = ({
 				aria-label="Import JSON file"
 			/>
 			<Button
-				onClick={onToggleAllSections}
-				variant="outline"
+				onClick={onExportPDF}
+				variant="default"
 				size="sm"
-				aria-label={
-					allSectionsCollapsed ? "Expand all sections" : "Collapse all sections"
-				}
-				title={
-					allSectionsCollapsed ? "Expand all sections" : "Collapse all sections"
-				}
+				className="h-9 px-4"
+				aria-label="Export PDF"
 			>
-				<ChevronsUpDown className="size-4" />
-				{allSectionsCollapsed ? "Expand All" : "Collapse All"}
-			</Button>
-			<Button onClick={onExportPDF} variant="default" aria-label="Export PDF">
 				<Download className="size-4" />
 				Export PDF
 			</Button>
-			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
-					<Button variant="secondary" aria-label="Actions menu">
-						<MoreVertical className="size-4" />
-						Actions
-					</Button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent align="end" className="w-48">
+			<div className="flex items-center -space-x-px">
+				<Button
+					onClick={onToggleAllSections}
+					variant="outline"
+					size="sm"
+					className="rounded-r-none h-9 relative z-10"
+					aria-label={
+						allSectionsCollapsed ? "Expand all sections" : "Collapse all sections"
+					}
+					title={
+						allSectionsCollapsed ? "Expand all sections" : "Collapse all sections"
+					}
+				>
+					<ChevronsUpDown className="size-4" />
+					{allSectionsCollapsed ? "Expand All" : "Collapse All"}
+				</Button>
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button
+							variant="outline"
+							size="icon"
+							className="rounded-l-none h-9 relative z-10 w-9"
+							aria-label="Actions menu"
+							title="Actions menu"
+						>
+							<MoreVertical className="size-4" />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent align="end" className="w-48">
 					<DropdownMenuItem onClick={onImportJSON} className="cursor-pointer">
 						<Upload className="mr-2 size-4" />
 						Import JSON
@@ -86,11 +99,12 @@ export const ActionsMenu = ({
 						onClick={onClearAll}
 						className="cursor-pointer text-red-600 focus:text-red-600 dark:text-red-400 dark:focus:text-red-400"
 					>
-						<Trash2 className="mr-2 size-4" />
-						Clear All
+						<RotateCcw className="mr-2 size-4" />
+						Reset resume
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>
+			</div>
 		</div>
 	);
 };

@@ -6,17 +6,7 @@ export const exportToPDF = async (
 	filename = "resume.pdf",
 ) => {
 	try {
-		const canvas = await html2canvas(element, {
-			scale: 1.5,
-			useCORS: true,
-			logging: false,
-			backgroundColor: "#ffffff",
-			width: element.offsetWidth,
-			height: element.offsetHeight,
-		});
-
-		// Use JPEG with quality 0.85 for better compression
-		const imgData = canvas.toDataURL("image/jpeg", 0.85);
+		// 1. Setup PDF and constants
 		const pdf = new jsPDF({
 			orientation: "portrait",
 			unit: "mm",
@@ -26,98 +16,153 @@ export const exportToPDF = async (
 
 		const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
 		const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
-
-		// Convert canvas dimensions to mm
-		// At 96 DPI: 1px = 0.264583mm, but canvas is scaled by 1.5
-		// So actual element size in mm = canvas size / 1.5 * 0.264583
 		const pxToMm = 0.264583;
-		const actualWidthMm = (canvas.width / 1.5) * pxToMm;
-		const actualHeightMm = (canvas.height / 1.5) * pxToMm;
-
-		// Scale to fit PDF width (should be exact since preview is A4 width)
-		const widthRatio = pdfWidth / actualWidthMm;
-		const imgWidthMm = pdfWidth;
-		const imgHeightMm = actualHeightMm * widthRatio;
-
-		let heightLeft = imgHeightMm;
-		let position = 0;
-
-		// Add first page
-		pdf.addImage(imgData, "JPEG", 0, position, imgWidthMm, imgHeightMm);
 		
-		// Add clickable links
-		const links = element.querySelectorAll("a[href]");
-		const elementRect = element.getBoundingClientRect();
+		// Determine the current scale of the preview (due to zoom/auto-scale)
+		// This is critical for accurate link positioning
+		const currentScale = element.getBoundingClientRect().width / element.offsetWidth;
 		
-		links.forEach((link) => {
-			const href = (link as HTMLAnchorElement).href;
-			if (!href) return;
-			
-			const linkRect = link.getBoundingClientRect();
-			// Get position relative to element
-			const relativeX = linkRect.left - elementRect.left;
-			const relativeY = linkRect.top - elementRect.top;
-			const linkWidth = linkRect.width;
-			const linkHeight = linkRect.height;
-			
-			// Convert to mm (accounting for canvas scale)
-			const xMm = (relativeX * pxToMm) * widthRatio;
-			const yMm = (relativeY * pxToMm) * widthRatio;
-			const widthMm = (linkWidth * pxToMm) * widthRatio;
-			const heightMm = (linkHeight * pxToMm) * widthRatio;
-			
-			// Check which page(s) this link is on
-			const linkTop = yMm;
-			const linkBottom = yMm + heightMm;
-			
-			// Add link to first page if it's visible
-			if (linkTop < pdfHeight) {
-				pdf.link(xMm, linkTop, widthMm, Math.min(heightMm, pdfHeight - linkTop), {
-					url: href,
-				});
-			}
+		// Use a consistent internal scale for high-quality capture
+		const captureScale = 2;
+		const paddingMm = 8; // ~30px padding
+
+		// 2. Identify and capture elements
+		const headerElement = element.querySelector("[data-pdf-header]") as HTMLElement;
+		const sectionsContainer = element.querySelector("[data-pdf-sections-container]") as HTMLElement;
+
+		if (!sectionsContainer) {
+			throw new Error("Could not find resume content to export");
+		}
+
+		// Capture Header
+		let headerCanvas: HTMLCanvasElement | null = null;
+		let headerHeightMm = 0;
+		if (headerElement) {
+			headerCanvas = await html2canvas(headerElement, {
+				scale: captureScale,
+				useCORS: true,
+				backgroundColor: "#ffffff",
+				logging: false,
+			});
+			headerHeightMm = (headerCanvas.height / captureScale) * pxToMm;
+		}
+
+		// Capture all content at once (much more stable than section-by-section)
+		const contentCanvas = await html2canvas(sectionsContainer, {
+			scale: captureScale,
+			useCORS: true,
+			backgroundColor: "#ffffff",
+			logging: false,
 		});
-		
-		heightLeft -= pdfHeight;
+		const contentHeightMm = (contentCanvas.height / captureScale) * pxToMm;
 
-		// Add additional pages only if content actually exceeds one page
-		// Use a small threshold (1mm) to avoid rounding errors creating extra pages
-		let pageNumber = 1;
-		while (heightLeft > 1) {
-			position = -(imgHeightMm - heightLeft);
-			pdf.addPage();
-			pdf.addImage(imgData, "JPEG", 0, position, imgWidthMm, imgHeightMm);
+		// 3. Helper for adding links
+		const addLinks = (el: HTMLElement, pageYOffset: number, pageNum: number) => {
+			const links = el.querySelectorAll("a[href]");
+			const elRect = el.getBoundingClientRect();
 			
-			// Add links for this page
-			links.forEach((link) => {
+			for (const link of Array.from(links)) {
 				const href = (link as HTMLAnchorElement).href;
-				if (!href) return;
+				if (!href) continue;
 				
 				const linkRect = link.getBoundingClientRect();
-				const relativeX = linkRect.left - elementRect.left;
-				const relativeY = linkRect.top - elementRect.top;
-				const linkWidth = linkRect.width;
-				const linkHeight = linkRect.height;
 				
-				const xMm = (relativeX * pxToMm) * widthRatio;
-				const yMm = (relativeY * pxToMm) * widthRatio;
-				const widthMm = (linkWidth * pxToMm) * widthRatio;
-				const heightMm = (linkHeight * pxToMm) * widthRatio;
+				// Calculate position relative to the element, then adjust for scale and padding
+				// We divide by currentScale because getBoundingClientRect() is already scaled by the browser
+				const relX = (linkRect.left - elRect.left) / currentScale;
+				const relY = (linkRect.top - elRect.top) / currentScale;
 				
-				// Calculate link position on this page
-				const linkTopOnPage = yMm + position;
-				const linkBottomOnPage = linkTopOnPage + heightMm;
-				
-				// Only add link if it's visible on this page
-				if (linkTopOnPage >= 0 && linkTopOnPage < pdfHeight) {
-					pdf.link(xMm, linkTopOnPage, widthMm, Math.min(heightMm, pdfHeight - linkTopOnPage), {
-						url: href,
-					});
+				const x = paddingMm + (relX * pxToMm);
+				const y = pageYOffset + (relY * pxToMm);
+				const w = (linkRect.width / currentScale) * pxToMm;
+				const h = (linkRect.height / currentScale) * pxToMm;
+
+				// Check if the link is actually visible on the current page
+				if (y >= 0 && y < pdfHeight - paddingMm) {
+					pdf.setPage(pageNum);
+					pdf.link(x, y, w, h, { url: href });
 				}
-			});
+			}
+		};
+
+		// 4. Multi-page orchestration
+		let heightRemaining = contentHeightMm;
+		let canvasOffsetMm = 0;
+		let pageNum = 1;
+
+		const availablePageHeight = pdfHeight - (2 * paddingMm) - (headerHeightMm > 0 ? headerHeightMm + 4 : 0);
+
+		while (heightRemaining > 0 || pageNum === 1) {
+			if (pageNum > 1) {
+				pdf.addPage();
+			}
+
+			let currentY = paddingMm;
+
+			// Add Header to every page
+			if (headerCanvas) {
+				const headerImg = headerCanvas.toDataURL("image/jpeg", 0.95);
+				pdf.addImage(headerImg, "JPEG", paddingMm, currentY, pdfWidth - (2 * paddingMm), headerHeightMm);
+				addLinks(headerElement, currentY, pageNum);
+				currentY += headerHeightMm + 4; // Gap after header
+			}
+
+			// Calculate how much content fits on this page
+			const sliceHeightMm = Math.min(heightRemaining, pdfHeight - paddingMm - currentY);
 			
-			heightLeft -= pdfHeight;
-			pageNumber++;
+			if (sliceHeightMm > 0) {
+				// Create a slice of the content canvas
+				const sliceCanvas = document.createElement("canvas");
+				sliceCanvas.width = contentCanvas.width;
+				sliceCanvas.height = (sliceHeightMm / pxToMm) * captureScale;
+				
+				const ctx = sliceCanvas.getContext("2d");
+				if (ctx) {
+					ctx.drawImage(
+						contentCanvas,
+						0, (canvasOffsetMm / pxToMm) * captureScale, contentCanvas.width, sliceCanvas.height,
+						0, 0, sliceCanvas.width, sliceCanvas.height
+					);
+					
+					const sliceImg = sliceCanvas.toDataURL("image/jpeg", 0.95);
+					pdf.addImage(sliceImg, "JPEG", paddingMm, currentY, pdfWidth - (2 * paddingMm), sliceHeightMm);
+					
+					// Approximate link positioning for the content slice
+					// Since we captured the whole contentContainer, we can use it to find all links
+					// and filter by the current vertical window
+					const containerRect = sectionsContainer.getBoundingClientRect();
+					const contentLinks = sectionsContainer.querySelectorAll("a[href]");
+					
+					for (const link of Array.from(contentLinks)) {
+						const href = (link as HTMLAnchorElement).href;
+						const linkRect = link.getBoundingClientRect();
+						
+						// Vertical position relative to the container, in mm
+						const relYMm = ((linkRect.top - containerRect.top) / currentScale) * pxToMm;
+						
+						// Check if this link falls within the current slice
+						if (relYMm >= canvasOffsetMm - 1 && relYMm < canvasOffsetMm + sliceHeightMm) {
+							const relXMm = ((linkRect.left - containerRect.left) / currentScale) * pxToMm;
+							const linkWMm = (linkRect.width / currentScale) * pxToMm;
+							const linkHMm = (linkRect.height / currentScale) * pxToMm;
+							
+							const x = paddingMm + relXMm;
+							const y = currentY + (relYMm - canvasOffsetMm);
+							
+							pdf.setPage(pageNum);
+							pdf.link(x, y, linkWMm, linkHMm, { url: href });
+						}
+					}
+				}
+
+				heightRemaining -= sliceHeightMm;
+				canvasOffsetMm += sliceHeightMm;
+			}
+
+			pageNum++;
+			
+			// Safety break for extremely long content
+			if (pageNum > 20) break;
 		}
 
 		pdf.save(filename);

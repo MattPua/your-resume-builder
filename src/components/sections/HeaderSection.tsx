@@ -40,6 +40,7 @@ export const HeaderSection = ({
 				open={isOpen}
 				onOpenChange={onOpenChange}
 				className="bg-white dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
+				id="section-header"
 			>
 				<div className="p-6">
 				<SectionHeader
