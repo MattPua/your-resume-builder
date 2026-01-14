@@ -7,7 +7,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "../ui/tooltip";
-import logo from "../ui/logo.png";
+import logo from "../ui/logo.jpeg";
 
 export const SiteHeader = () => {
 	return (

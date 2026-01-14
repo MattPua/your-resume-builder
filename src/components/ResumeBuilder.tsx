@@ -25,7 +25,7 @@ import { AppControlsHeader } from "./layout/AppControlsHeader";
 import { AppNavigation } from "./layout/AppNavigation";
 import { ScrollToTopButton } from "./layout/ScrollToTopButton";
 import { PreviewPane } from "./preview/PreviewPane";
-import logo from "./ui/logo.png";
+import logo from "./ui/logo.jpeg";
 
 const DEFAULT_SECTION_ORDER: (
 	| "experience"
