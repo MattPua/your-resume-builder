@@ -23,6 +23,7 @@ import {
 	GraduationCap,
 	Menu,
 	RotateCcw,
+	ShieldCheck,
 	Type,
 	ZoomIn,
 	ZoomOut,
@@ -336,11 +337,20 @@ export const ResumeBuilder = () => {
 
 				<div className="flex-1 lg:pl-20 px-4 py-8">
 					<div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
-						<div className="flex items-center gap-4">
-							<h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-								Resume Builder
-							</h1>
-							<ThemeToggle />
+						<div className="flex flex-col gap-1">
+							<div className="flex items-center gap-4">
+								<h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+									Resume Builder
+								</h1>
+								<ThemeToggle />
+							</div>
+							<p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+								<ShieldCheck className="size-3.5 text-green-600 dark:text-green-500" />
+								<span>
+									100% Local & Private • Nothing is uploaded • All data stays in
+									your browser • Completely Free
+								</span>
+							</p>
 						</div>
 						<ActionsMenu
 							fileInputRef={fileInputRef}
