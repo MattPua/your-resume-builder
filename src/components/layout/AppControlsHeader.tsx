@@ -9,6 +9,7 @@ interface AppControlsHeaderProps {
 	handleExportMarkdown: () => void;
 	handleExportText: () => void;
 	handleExportPDF: () => void;
+	handlePrint: () => void;
 	handleClearAll: () => void;
 	handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	handleToggleAllSections: () => void;
@@ -23,13 +24,14 @@ export const AppControlsHeader = ({
 	handleExportMarkdown,
 	handleExportText,
 	handleExportPDF,
+	handlePrint,
 	handleClearAll,
 	handleFileChange,
 	handleToggleAllSections,
 	isExporting,
 }: AppControlsHeaderProps) => {
 	return (
-		<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 p-6 mb-8 bg-white dark:bg-gray-800/40 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm backdrop-blur-sm">
+		<div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 p-6 mb-8 bg-white dark:bg-gray-800/40 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm backdrop-blur-sm no-print">
 			<div className="flex flex-col gap-1">
 				<p className="text-sm font-medium text-gray-700 dark:text-gray-300">
 					Focus on your content, we'll handle the professional layout.
@@ -47,6 +49,7 @@ export const AppControlsHeader = ({
 					onExportMarkdown={handleExportMarkdown}
 					onExportText={handleExportText}
 					onExportPDF={handleExportPDF}
+					onPrint={handlePrint}
 					onClearAll={handleClearAll}
 					onFileChange={handleFileChange}
 					onToggleAllSections={handleToggleAllSections}

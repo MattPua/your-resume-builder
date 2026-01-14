@@ -42,9 +42,9 @@ export const PreviewPane = ({
 	}, []);
 
 	return (
-		<div className="lg:sticky lg:top-8 lg:h-[calc(100vh-4rem)]">
-			<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 h-full flex flex-col">
-				<div className="flex items-center justify-between mb-2">
+		<div className="lg:sticky lg:top-8 lg:h-[calc(100vh-4rem)] resume-preview-root-container">
+			<div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 h-full flex flex-col no-print-background">
+				<div className="flex items-center justify-between mb-2 no-print">
 					<div className="flex items-center gap-3">
 						<h2 className="text-lg font-semibold text-gray-900 dark:text-white leading-tight">
 							Preview
@@ -84,9 +84,10 @@ export const PreviewPane = ({
 				>
 					<div
 						ref={previewContainerRef}
-						className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-900 overflow-auto flex-1 min-h-0"
+						className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-900 overflow-auto flex-1 min-h-0 no-print-border no-print-background"
 					>
 						<div
+							className="resume-preview-wrapper"
 							style={{
 								width: `${794 * scale * zoomLevel}px`,
 								minHeight: `${1123 * scale * zoomLevel}px`,

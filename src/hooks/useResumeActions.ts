@@ -117,6 +117,10 @@ export const useResumeActions = ({
 		URL.revokeObjectURL(url);
 	};
 
+	const handlePrint = () => {
+		window.print();
+	};
+
 	const handleImportJSON = () => {
 		fileInputRef.current?.click();
 	};
@@ -156,6 +160,7 @@ export const useResumeActions = ({
 		handleExportJSON,
 		handleExportMarkdown,
 		handleExportText,
+		handlePrint,
 		handleImportJSON,
 		handleFileChange,
 		isExporting,

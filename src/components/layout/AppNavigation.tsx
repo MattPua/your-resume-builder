@@ -47,7 +47,7 @@ export const AppNavigation = ({
 	return (
 		<>
 			{/* Desktop Section Navigation */}
-			<div className="hidden lg:flex fixed left-4 top-1/2 -translate-y-1/2 flex-col gap-2 z-50">
+			<div className="hidden lg:flex fixed left-4 top-1/2 -translate-y-1/2 flex-col gap-2 z-50 no-print">
 				<div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full shadow-xl border border-gray-200 dark:border-gray-700 p-2 flex flex-col gap-2">
 					<Tooltip>
 						<TooltipTrigger asChild>
@@ -92,7 +92,7 @@ export const AppNavigation = ({
 			</div>
 
 			{/* Mobile Section Navigation */}
-			<div className="lg:hidden fixed left-8 bottom-8 z-50">
+			<div className="lg:hidden fixed left-8 bottom-8 z-50 no-print">
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
 						<Button

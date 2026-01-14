@@ -142,6 +142,7 @@ export const ResumeBuilder = () => {
 		handleExportJSON,
 		handleExportMarkdown,
 		handleExportText,
+		handlePrint,
 		handleImportJSON,
 		handleFileChange,
 		isExporting,
@@ -241,6 +242,7 @@ export const ResumeBuilder = () => {
 							handleExportMarkdown={handleExportMarkdown}
 							handleExportText={handleExportText}
 							handleExportPDF={handleExportPDF}
+							handlePrint={handlePrint}
 							handleClearAll={handleClearAll}
 							handleFileChange={handleFileChange}
 							handleToggleAllSections={handleToggleAllSections}
@@ -248,7 +250,7 @@ export const ResumeBuilder = () => {
 						/>
 
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-						<section className="space-y-6" aria-label="Resume Editor">
+						<section className="space-y-6 no-print" aria-label="Resume Editor">
 							<HeaderSection
 								resumeData={resumeData}
 								updateResumeData={updateResumeData}

@@ -88,7 +88,7 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
   return (
     <div
       ref={previewRef}
-      className="resume-preview bg-white text-gray-900 p-8"
+      className="resume-preview resume-preview-root bg-white text-gray-900 p-8"
       style={{
         width: '794px',
         minHeight: '1123px',
