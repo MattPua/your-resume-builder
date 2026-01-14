@@ -33,6 +33,7 @@ import { ErrorBoundary } from "./ErrorBoundary";
 import { ResumePreview } from "./ResumePreview";
 import { SectionList } from "./SectionList";
 import { HeaderSection } from "./sections/HeaderSection";
+import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "./ui/button";
 import {
 	DropdownMenu,
@@ -332,6 +333,7 @@ export const ResumeBuilder = () => {
 							<h1 className="text-3xl font-bold text-gray-900 dark:text-white">
 								Resume Builder
 							</h1>
+							<ThemeToggle />
 						</div>
 						<ActionsMenu
 							fileInputRef={fileInputRef}
