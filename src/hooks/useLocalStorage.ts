@@ -143,14 +143,16 @@ const sampleResumeData: ResumeData = {
 }
 
 export const useLocalStorage = () => {
-  const [resumeData, setResumeData] = useState<ResumeData>(sampleResumeData)
+  const [resumeData, setResumeData] = useState<ResumeData>(defaultResumeData)
   const [isLoading, setIsLoading] = useState(true)
+  const [isNewUser, setIsNewUser] = useState(false)
 
   useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY)
       if (stored) {
         const parsed = JSON.parse(stored) as Partial<ResumeData> & { header?: string; experience?: string | ResumeData['experience'] }
+        // ... (existing migration logic)
         // Migrate old data structure
         if (parsed.header && !parsed.name) {
           const migrated: ResumeData = {
@@ -247,6 +249,8 @@ export const useLocalStorage = () => {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated))
           }
         }
+      } else {
+        setIsNewUser(true)
       }
     } catch (error) {
       console.error('Failed to load resume data from localStorage:', error)
@@ -277,6 +281,17 @@ export const useLocalStorage = () => {
       }
     } catch (error) {
       console.error('Failed to reset resume data in localStorage:', error)
+    }
+  }
+
+  const loadSampleData = () => {
+    setResumeData(sampleResumeData)
+    try {
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(sampleResumeData))
+      }
+    } catch (error) {
+      console.error('Failed to load sample resume data in localStorage:', error)
     }
   }
 
@@ -348,7 +363,10 @@ export const useLocalStorage = () => {
     resumeData,
     updateResumeData,
     resetResumeData,
+    loadSampleData,
     importResumeData,
     isLoading,
+    isNewUser,
+    setIsNewUser,
   }
 }

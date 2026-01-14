@@ -26,6 +26,7 @@ import { AppNavigation } from "./layout/AppNavigation";
 import { ScrollToTopButton } from "./layout/ScrollToTopButton";
 import { PreviewPane } from "./preview/PreviewPane";
 import { ImportMarkdownDialog } from "./ImportMarkdownDialog";
+import { EmptyState } from "./EmptyState";
 import logo from "./ui/logo.jpeg";
 
 const DEFAULT_SECTION_ORDER: (
@@ -57,8 +58,11 @@ export const ResumeBuilder = () => {
 		resumeData,
 		updateResumeData,
 		resetResumeData,
+		loadSampleData,
 		importResumeData,
 		isLoading,
+		isNewUser,
+		setIsNewUser,
 	} = useLocalStorage();
 
 	const previewRef = useRef<HTMLDivElement>(null);
@@ -201,6 +205,38 @@ export const ResumeBuilder = () => {
 						</div>
 					</div>
 				</div>
+			</div>
+		);
+	}
+
+	if (isNewUser) {
+		return (
+			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+				<SiteHeader />
+				<main className="flex-1 flex items-center justify-center">
+					<EmptyState
+						onStartFresh={() => setIsNewUser(false)}
+						onLoadSample={() => {
+							loadSampleData();
+							setIsNewUser(false);
+						}}
+						onImportMarkdownText={() => {
+							setIsImportMarkdownOpen(true);
+							setIsNewUser(false);
+						}}
+					/>
+				</main>
+				<input
+					type="file"
+					ref={fileInputRef}
+					onChange={handleFileChange}
+					className="hidden"
+				/>
+				<ImportMarkdownDialog
+					open={isImportMarkdownOpen}
+					onOpenChange={setIsImportMarkdownOpen}
+					onImport={handleImportMarkdownText}
+				/>
 			</div>
 		);
 	}
