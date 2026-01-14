@@ -1,0 +1,11 @@
+# shadcn instructions
+
+Use the latest version of Shadcn to install new components, like this command to add a button component:
+
+```bash
+bunx shadcn@latest add button
+```
+
+# Component size limit
+
+No component should be more than 300 lines long if possible. If a component exceeds this limit, it must be refactored and split into smaller, more focused components.
