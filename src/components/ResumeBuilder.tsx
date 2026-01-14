@@ -19,7 +19,8 @@ import { useResumeActions } from "../hooks/useResumeActions";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { SectionList } from "./SectionList";
 import { HeaderSection } from "./sections/HeaderSection";
-import { AppHeader } from "./layout/AppHeader";
+import { SiteHeader } from "./layout/SiteHeader";
+import { AppControlsHeader } from "./layout/AppControlsHeader";
 import { AppNavigation } from "./layout/AppNavigation";
 import { ScrollToTopButton } from "./layout/ScrollToTopButton";
 import { PreviewPane } from "./preview/PreviewPane";
@@ -198,24 +199,27 @@ export const ResumeBuilder = () => {
 				</div>
 			}
 		>
-			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex relative">
-				<AppNavigation
-					activeSection={activeSection}
-					sectionOrder={sectionOrder}
-					onScrollToSection={scrollToSection}
-				/>
+			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+				<SiteHeader />
 
-				<main className="flex-1 lg:pl-20 px-4 py-8">
-					<AppHeader
-						fileInputRef={fileInputRef}
-						allSectionsCollapsed={allSectionsCollapsed}
-						handleImportJSON={handleImportJSON}
-						handleExportJSON={handleExportJSON}
-						handleExportPDF={handleExportPDF}
-						handleClearAll={handleClearAll}
-						handleFileChange={handleFileChange}
-						handleToggleAllSections={handleToggleAllSections}
+				<div className="flex-1 flex relative">
+					<AppNavigation
+						activeSection={activeSection}
+						sectionOrder={sectionOrder}
+						onScrollToSection={scrollToSection}
 					/>
+
+					<main className="flex-1 lg:pl-20 px-4 py-8">
+						<AppControlsHeader
+							fileInputRef={fileInputRef}
+							allSectionsCollapsed={allSectionsCollapsed}
+							handleImportJSON={handleImportJSON}
+							handleExportJSON={handleExportJSON}
+							handleExportPDF={handleExportPDF}
+							handleClearAll={handleClearAll}
+							handleFileChange={handleFileChange}
+							handleToggleAllSections={handleToggleAllSections}
+						/>
 
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 						<section className="space-y-6" aria-label="Resume Editor">
@@ -279,6 +283,7 @@ export const ResumeBuilder = () => {
 				</main>
 
 				<ScrollToTopButton isVisible={showScrollTop} onClick={scrollToTop} />
+				</div>
 			</div>
 		</ErrorBoundary>
 	);

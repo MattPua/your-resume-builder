@@ -1,0 +1,38 @@
+import { Github } from "lucide-react";
+import { ThemeToggle } from "../ThemeToggle";
+import { InfoDialog } from "./InfoDialog";
+import { Button } from "../ui/button";
+
+export const SiteHeader = () => {
+	return (
+		<header className="w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+			<div className="max-w-[1600px] mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
+				<div className="flex items-center gap-4">
+					<h1 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight">
+						Free Resume Builder
+					</h1>
+				</div>
+				<div className="flex items-center gap-2">
+					<ThemeToggle />
+					<InfoDialog />
+					<Button
+						variant="ghost"
+						size="icon"
+						className="rounded-full size-10 hover:bg-gray-100 dark:hover:bg-gray-700"
+						asChild
+					>
+						<a
+							href="https://github.com/MattPua/resume-builder"
+							target="_blank"
+							rel="noopener noreferrer"
+							title="View on GitHub"
+						>
+							<Github className="size-5" />
+							<span className="sr-only">GitHub Repository</span>
+						</a>
+					</Button>
+				</div>
+			</div>
+		</header>
+	);
+};
