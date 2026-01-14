@@ -1,6 +1,7 @@
 {
-  "short_name": "TanStack App",
-  "name": "Create TanStack App Sample",
+  "short_name": "Resume Builder",
+  "name": "Free Resume Builder | 100% Private & Local",
+  "description": "Create professional resumes with total privacy. 100% local, secure, and free.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,16 +11,18 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#1e40af",
   "background_color": "#ffffff"
 }
