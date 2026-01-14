@@ -342,23 +342,4 @@ code {
   }
 }
 
-    .resume-preview {
-      @apply p-0;
-      box-shadow: none !important;
-      border: none !important;
-    }
 
-    .resume-preview section {
-      @apply break-inside-avoid mb-4;
-    }
-
-    .resume-preview h2 {
-      @apply break-after-avoid;
-    }
-
-    /* Hide UI controls inside preview if any */
-    [data-print-hide] {
-      display: none !important;
-    }
-  }
-}
