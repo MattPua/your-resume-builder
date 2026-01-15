@@ -30,6 +30,16 @@ export const SiteHeader = () => {
 				{/* Desktop Navigation */}
 				<div className="hidden sm:flex items-center gap-6">
 					<Link
+						to="/"
+						activeOptions={{ exact: true }}
+						className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+						activeProps={{
+							className: "text-primary dark:text-primary font-semibold",
+						}}
+					>
+						Home
+					</Link>
+					<Link
 						to="/about"
 						className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
 						activeProps={{
@@ -59,6 +69,17 @@ export const SiteHeader = () => {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" className="w-48">
+							<DropdownMenuItem asChild>
+								<Link
+									to="/"
+									activeOptions={{ exact: true }}
+									activeProps={{
+										className: "bg-accent text-accent-foreground",
+									}}
+								>
+									Home
+								</Link>
+							</DropdownMenuItem>
 							<DropdownMenuItem asChild>
 								<Link
 									to="/about"

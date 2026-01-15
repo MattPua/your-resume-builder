@@ -4,6 +4,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "../components/ThemeProvider";
 import { TooltipProvider } from "../components/ui/tooltip";
+import { NotFound } from "../components/NotFound";
 import { createSeo } from "../lib/seo";
 
 import appCss from "../styles.css?url";
@@ -69,7 +70,7 @@ export const Route = createRootRoute({
 			scripts: seo.scripts,
 		};
 	},
-
+	notFoundComponent: () => <NotFound />,
 	shellComponent: RootDocument,
 });
 
