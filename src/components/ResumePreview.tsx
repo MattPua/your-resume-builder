@@ -71,19 +71,19 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
 	const spacingMap = {
 		compact: {
 			section: "mb-1",
-			header: "mb-1 pb-1",
+			header: "mb-0 pb-0",
 			content: "gap-1",
 			item: "mb-0.5",
 		},
 		default: {
 			section: "mb-1",
-			header: "mb-1 pb-1.5",
+			header: "mb-0 pb-0",
 			content: "gap-2",
 			item: "mb-1",
 		},
 		comfortable: {
 			section: "mb-1.5",
-			header: "mb-1.5 pb-2",
+			header: "mb-0 pb-0",
 			content: "gap-3",
 			item: "mb-1.5",
 		},

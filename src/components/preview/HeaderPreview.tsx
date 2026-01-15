@@ -10,9 +10,9 @@ export const HeaderPreview = ({
 	layoutMode = "default",
 }: HeaderPreviewProps) => {
 	const spacingMap = {
-		compact: "mb-0.5 pb-1",
-		default: "mb-1 pb-1.5",
-		comfortable: "mb-1.5 pb-2",
+		compact: "mb-0 pb-0",
+		default: "mb-0 pb-0",
+		comfortable: "mb-0 pb-0",
 	}[layoutMode];
 
 	const titleSizeMap = {
@@ -22,8 +22,8 @@ export const HeaderPreview = ({
 	}[layoutMode];
 
 	return (
-		<section className={`${spacingMap} border-b border-gray-100`}>
-			<div className="flex flex-row items-center justify-between gap-6 pb-2">
+		<section className={`${spacingMap}`}>
+			<div className="flex flex-row items-center justify-between gap-6 pb-0">
 				<div className="shrink-0">
 					<h1
 						className={`${titleSizeMap} font-bold text-gray-900 leading-tight`}
