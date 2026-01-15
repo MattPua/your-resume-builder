@@ -7,6 +7,12 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import {
+	NavigationMenu,
+	NavigationMenuItem,
+	NavigationMenuList,
+	navigationMenuTriggerStyle,
+} from "../ui/navigation-menu";
 import logo from "../ui/logo.webp";
 
 export const SiteHeader = () => {
@@ -28,44 +34,56 @@ export const SiteHeader = () => {
 				</Link>
 
 				{/* Desktop Navigation */}
-				<div className="hidden sm:flex items-center gap-6">
-					<Link
-						to="/"
-						activeOptions={{ exact: true }}
-						className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
-						activeProps={{
-							className: "text-primary dark:text-primary font-semibold",
-						}}
-					>
-						Home
-					</Link>
-					<Link
-						to="/build"
-						className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
-						activeProps={{
-							className: "text-primary dark:text-primary font-semibold",
-						}}
-					>
-						Build
-					</Link>
-					<Link
-						to="/about"
-						className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
-						activeProps={{
-							className: "text-primary dark:text-primary font-semibold",
-						}}
-					>
-						About
-					</Link>
-					<Link
-						to="/faqs"
-						className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
-						activeProps={{
-							className: "text-primary dark:text-primary font-semibold",
-						}}
-					>
-						FAQs
-					</Link>
+				<div className="hidden sm:flex items-center">
+					<NavigationMenu>
+						<NavigationMenuList>
+							<NavigationMenuItem>
+								<Link
+									to="/"
+									activeOptions={{ exact: true }}
+									className={navigationMenuTriggerStyle()}
+									activeProps={{
+										className: "bg-primary/10 text-primary font-bold",
+									}}
+								>
+									Home
+								</Link>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<Link
+									to="/build"
+									className={navigationMenuTriggerStyle()}
+									activeProps={{
+										className: "bg-primary/10 text-primary font-bold",
+									}}
+								>
+									Build
+								</Link>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<Link
+									to="/about"
+									className={navigationMenuTriggerStyle()}
+									activeProps={{
+										className: "bg-primary/10 text-primary font-bold",
+									}}
+								>
+									About
+								</Link>
+							</NavigationMenuItem>
+							<NavigationMenuItem>
+								<Link
+									to="/faqs"
+									className={navigationMenuTriggerStyle()}
+									activeProps={{
+										className: "bg-primary/10 text-primary font-bold",
+									}}
+								>
+									FAQs
+								</Link>
+							</NavigationMenuItem>
+						</NavigationMenuList>
+					</NavigationMenu>
 				</div>
 
 				{/* Mobile Navigation */}
@@ -83,7 +101,7 @@ export const SiteHeader = () => {
 									to="/"
 									activeOptions={{ exact: true }}
 									activeProps={{
-										className: "bg-accent text-accent-foreground",
+										className: "bg-primary/10 text-primary font-bold",
 									}}
 								>
 									Home
@@ -93,7 +111,7 @@ export const SiteHeader = () => {
 								<Link
 									to="/build"
 									activeProps={{
-										className: "bg-accent text-accent-foreground",
+										className: "bg-primary/10 text-primary font-bold",
 									}}
 								>
 									Build
@@ -103,7 +121,7 @@ export const SiteHeader = () => {
 								<Link
 									to="/about"
 									activeProps={{
-										className: "bg-accent text-accent-foreground",
+										className: "bg-primary/10 text-primary font-bold",
 									}}
 								>
 									About
@@ -113,7 +131,7 @@ export const SiteHeader = () => {
 								<Link
 									to="/faqs"
 									activeProps={{
-										className: "bg-accent text-accent-foreground",
+										className: "bg-primary/10 text-primary font-bold",
 									}}
 								>
 									FAQs
