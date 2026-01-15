@@ -39,11 +39,11 @@ export const EducationEntryEditor = ({
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className={`border rounded-lg bg-gray-50 dark:bg-gray-900 ${isHidden ? 'border-primary/40 dark:border-primary/30 border-dashed opacity-60' : 'border-gray-200 dark:border-gray-700'}`}>
       <div className="p-4">
-        <CollapsibleTrigger className="flex items-center justify-between w-full mb-2 cursor-pointer">
-          <h4 className="font-semibold text-gray-800 dark:text-gray-200">
-            Education #{index + 1}
+        <CollapsibleTrigger className="flex items-center justify-between w-full mb-2 cursor-pointer gap-4">
+          <h4 className="font-semibold text-gray-800 dark:text-gray-200 truncate text-left">
+            {entry.degree || `Education #${index + 1}`}
           </h4>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             <Tooltip>
               <TooltipTrigger asChild>
                 <button

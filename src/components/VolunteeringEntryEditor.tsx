@@ -67,12 +67,12 @@ export const VolunteeringEntryEditor = ({
 			className={`border rounded-lg bg-gray-50 dark:bg-gray-900 ${isHidden ? "border-primary/40 dark:border-primary/30 border-dashed opacity-60" : "border-gray-200 dark:border-gray-700"}`}
 		>
 			<div className="p-4">
-				<CollapsibleTrigger className="flex items-center justify-between w-full mb-2 cursor-pointer">
-					<div className="flex items-center gap-2">
+				<CollapsibleTrigger className="flex items-center justify-between w-full mb-2 cursor-pointer gap-4">
+					<div className="flex items-center gap-2 min-w-0">
 						{dragListeners && dragAttributes && (
 							<button
 								type="button"
-								className="cursor-grab active:cursor-grabbing touch-none"
+								className="cursor-grab active:cursor-grabbing touch-none shrink-0"
 								{...dragListeners}
 								{...dragAttributes}
 								onClick={(e) => e.stopPropagation()}
@@ -80,11 +80,11 @@ export const VolunteeringEntryEditor = ({
 								<GripVertical className="h-4 w-4 text-gray-400" />
 							</button>
 						)}
-						<h4 className="font-semibold text-gray-800 dark:text-gray-200">
+						<h4 className="font-semibold text-gray-800 dark:text-gray-200 truncate text-left">
 							{entry.organization || `Volunteering #${index + 1}`}
 						</h4>
 					</div>
-					<div className="flex items-center gap-3">
+					<div className="flex items-center gap-3 shrink-0">
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<button

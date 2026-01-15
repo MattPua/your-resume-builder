@@ -151,12 +151,12 @@ export const SectionHeader = ({
 	};
 
 	return (
-		<CollapsibleTrigger className="flex items-center justify-between w-full mb-2 cursor-pointer">
-			<div className="flex items-center gap-2">
+		<CollapsibleTrigger className="flex items-center justify-between w-full mb-2 cursor-pointer gap-4">
+			<div className="flex items-center gap-2 min-w-0">
 				{attributes && listeners && (
 					<button
 						type="button"
-						className="cursor-grab active:cursor-grabbing touch-none"
+						className="cursor-grab active:cursor-grabbing touch-none shrink-0"
 						{...listeners}
 						{...attributes}
 					>
@@ -171,14 +171,14 @@ export const SectionHeader = ({
 						onBlur={handleTitleBlur}
 						onKeyDown={handleInputKeyDown}
 						onClick={(e) => e.stopPropagation()}
-						className="h-auto p-0 text-lg font-semibold border-none shadow-none focus-visible:ring-0 bg-transparent"
+						className="h-auto p-0 text-lg font-semibold border-none shadow-none focus-visible:ring-0 bg-transparent shrink-0"
 						style={{ width: `${Math.max(editValue.length * 8, 100)}px` }}
 					/>
 				) : (
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<h2
-								className={`text-lg font-semibold text-gray-900 dark:text-white leading-tight ${
+								className={`text-lg font-semibold text-gray-900 dark:text-white leading-tight truncate text-left ${
 									onTitleChange ? "cursor-text hover:underline" : ""
 								}`}
 								onClick={handleTitleClick}
@@ -196,7 +196,7 @@ export const SectionHeader = ({
 					</Tooltip>
 				)}
 			</div>
-			<div className="flex items-center gap-2">
+			<div className="flex items-center gap-2 shrink-0">
 				{renderVisibilityControl()}
 				<ChevronDown
 					className={`h-4 w-4 text-gray-500 transition-transform ${

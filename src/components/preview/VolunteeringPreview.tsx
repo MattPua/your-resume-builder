@@ -25,37 +25,48 @@ export const VolunteeringPreview = ({ entries, title = "Volunteering", backgroun
     <SectionPreview title={title} backgroundColor={backgroundColor} textColor={textColor} layoutMode={layoutMode}>
       <div className={`flex flex-col ${spacingMap}`}>
         {visibleEntries.map((entry, index) => (
-          <div key={`${entry.organization}-${entry.role}-${index}`}>
-            <div className="mb-0">
-              <div className="flex items-baseline justify-between gap-4">
-                <div>
-                  <h3 className="text-base font-semibold text-gray-900" style={{ color: '#111827' }}>
-                    {entry.role} {entry.organization && (
-                      <>
-                        {" @ "}
-                        {entry.organizationUrl ? (
-                          <a
-                            href={entry.organizationUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ color: "#111827", textDecoration: "none" }}
-                          >
-                            {entry.organization}
-                          </a>
-                        ) : (
-                          entry.organization
-                        )}
-                      </>
-                    )}
-                  </h3>
-                </div>
-                {(entry.startDate || entry.endDate) && (
-                  <p className="text-sm text-gray-600 italic whitespace-nowrap" style={{ color: '#4b5563' }}>
-                    {entry.startDate} {entry.endDate ? `- ${entry.endDate}` : ''}
-                  </p>
-                )}
-              </div>
-            </div>
+						<div key={`${entry.organization}-${entry.role}-${index}`}>
+							<div className="mb-0">
+								<div className="flex flex-col items-start gap-0">
+									<div>
+										<h3
+											className="text-base font-semibold text-gray-900"
+											style={{ color: "#111827" }}
+										>
+											{entry.role}{" "}
+											{entry.organization && (
+												<>
+													{" @ "}
+													{entry.organizationUrl ? (
+														<a
+															href={entry.organizationUrl}
+															target="_blank"
+															rel="noopener noreferrer"
+															style={{
+																color: "#111827",
+																textDecoration: "none",
+															}}
+														>
+															{entry.organization}
+														</a>
+													) : (
+														entry.organization
+													)}
+												</>
+											)}
+										</h3>
+									</div>
+									{(entry.startDate || entry.endDate) && (
+										<p
+											className="text-sm text-gray-600 italic whitespace-nowrap"
+											style={{ color: "#4b5563" }}
+										>
+											{entry.startDate}{" "}
+											{entry.endDate ? `- ${entry.endDate}` : ""}
+										</p>
+									)}
+								</div>
+							</div>
             {entry.bulletPoints && (
               <div className="prose prose-sm max-w-none">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>

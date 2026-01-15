@@ -171,7 +171,7 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
       </div>
 
       {!hasContent && (
-        <div className="flex flex-col items-center justify-center py-48 px-4 text-center animate-in fade-in zoom-in duration-500 h-full min-h-[700px]">
+        <div className="flex flex-col items-start justify-center py-48 px-4 text-left animate-in fade-in zoom-in duration-500 h-full min-h-[700px]">
           <div className="relative mb-10">
             <div className="absolute -inset-8 rounded-full bg-primary/5 animate-pulse scale-110" />
             <div className="relative bg-white p-10 rounded-[2.5rem] shadow-sm border border-gray-100">
@@ -184,7 +184,7 @@ export const ResumePreview = ({ data, previewRef }: ResumePreviewProps) => {
           <h3 className="text-4xl font-bold text-gray-900 mb-4 tracking-tight">
             Your Resume Awaits
           </h3>
-          <p className="text-gray-500 max-w-md mx-auto text-xl leading-relaxed">
+          <p className="text-gray-500 max-w-md text-xl leading-relaxed">
             Fill out the details in the editor to see your professional resume take shape in real-time.
           </p>
           <div className="mt-16 flex items-center gap-3 text-sm font-bold text-primary/60 uppercase tracking-[0.3em]">

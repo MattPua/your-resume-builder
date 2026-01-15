@@ -26,7 +26,7 @@ export const ExperiencePreview = ({ entries, title = "Experience", backgroundCol
         {entries.map((entry, index) => (
           <div key={`${entry.company}-${entry.title}-${index}`}>
                 <div className="mb-0">
-                  <div className="flex items-baseline justify-between gap-4">
+                  <div className="flex flex-col items-start gap-0">
                     <div>
                       <h3 className="text-base font-semibold text-gray-900" style={{ color: '#111827' }}>
                         {entry.title} {entry.company && (

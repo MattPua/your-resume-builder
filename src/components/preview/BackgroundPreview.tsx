@@ -45,7 +45,7 @@ export const BackgroundPreview = ({
 					<div className="flex flex-col gap-1">
 						{education.map((entry, index) => (
 							<div key={`${entry.institution}-${entry.degree}-${index}`}>
-								<div className="flex items-baseline justify-between gap-4">
+								<div className="flex flex-col items-start gap-0">
 									<div>
 										<h3
 											className="text-base font-semibold text-gray-900"

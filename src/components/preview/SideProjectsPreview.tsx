@@ -37,7 +37,7 @@ export const SideProjectsPreview = ({
 				{entries.map((entry, index) => (
 					<div key={`${entry.title}-${index}`}>
 						<div className="mb-0">
-							<div className="flex items-baseline justify-between gap-4">
+							<div className="flex flex-col items-start gap-0">
 								<div>
 									<h3
 										className="text-base font-semibold text-gray-900"

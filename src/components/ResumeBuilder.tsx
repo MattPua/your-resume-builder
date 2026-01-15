@@ -23,8 +23,8 @@ import { ImportMarkdownDialog } from "./ImportMarkdownDialog";
 import { AppControlsHeader } from "./layout/AppControlsHeader";
 import { AppNavigation } from "./layout/AppNavigation";
 import { ScrollToTopButton } from "./layout/ScrollToTopButton";
-import { SiteHeader } from "./layout/SiteHeader";
 import { SiteFooter } from "./layout/SiteFooter";
+import { SiteHeader } from "./layout/SiteHeader";
 import { PreviewPane } from "./preview/PreviewPane";
 import { SectionList } from "./SectionList";
 import { HeaderSection } from "./sections/HeaderSection";
@@ -271,7 +271,7 @@ export const ResumeBuilder = () => {
 		return (
 			<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
 				<SiteHeader />
-				<main className="flex-1 flex items-center justify-center">
+				<main className="flex-1 flex items-center justify-center pb-4">
 					<EmptyState
 						onStartFresh={() => setIsNewUser(false)}
 						onLoadSample={() => {
@@ -333,7 +333,7 @@ export const ResumeBuilder = () => {
 						onScrollToSection={scrollToSection}
 					/>
 
-					<main className="flex-1 lg:pl-20 px-4 py-8">
+					<main className="flex-1 lg:pl-20 px-4 pt-8 pb-16">
 						<AppControlsHeader
 							fileInputRef={fileInputRef}
 							allSectionsCollapsed={allSectionsCollapsed}
@@ -352,7 +352,7 @@ export const ResumeBuilder = () => {
 
 						<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 							<section
-								className="space-y-6 no-print"
+								className="space-y-6 no-print order-2 lg:order-1"
 								aria-label="Resume Editor"
 							>
 								<HeaderSection
@@ -379,18 +379,21 @@ export const ResumeBuilder = () => {
 											setIsExperienceOpen={setIsExperienceOpen}
 											isBackgroundOpen={isBackgroundOpen}
 											setIsBackgroundOpen={setIsBackgroundOpen}
-										isSideProjectsOpen={isSideProjectsOpen}
-										setIsSideProjectsOpen={setIsSideProjectsOpen}
-										isVolunteeringOpen={isVolunteeringOpen}
-										setIsVolunteeringOpen={setIsVolunteeringOpen}
-										isPersonalOpen={isPersonalOpen}
-										setIsPersonalOpen={setIsPersonalOpen}
+											isSideProjectsOpen={isSideProjectsOpen}
+											setIsSideProjectsOpen={setIsSideProjectsOpen}
+											isVolunteeringOpen={isVolunteeringOpen}
+											setIsVolunteeringOpen={setIsVolunteeringOpen}
+											isPersonalOpen={isPersonalOpen}
+											setIsPersonalOpen={setIsPersonalOpen}
 										/>
 									</SortableContext>
 								</DndContext>
 							</section>
 
-							<section aria-label="Resume Preview">
+							<section
+								className="order-1 lg:order-2"
+								aria-label="Resume Preview"
+							>
 								<PreviewPane
 									resumeData={resumeData}
 									updateResumeData={updateResumeData}

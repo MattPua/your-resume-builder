@@ -22,10 +22,10 @@ export const ScrollToTopButton = ({
 			<TooltipTrigger asChild>
 				<Button
 					onClick={onClick}
-					className="fixed bottom-20 right-8 rounded-full shadow-lg z-50 size-12 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 no-print"
+					className="fixed bottom-8 right-8 rounded-full shadow-lg z-50 size-12 lg:size-10 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 no-print"
 					size="icon"
 				>
-					<ArrowUp className="size-6" />
+					<ArrowUp className="size-6 lg:size-5" />
 				</Button>
 			</TooltipTrigger>
 			<TooltipContent side="left">
