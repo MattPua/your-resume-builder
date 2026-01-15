@@ -1,8 +1,8 @@
 import type { ResumeData } from "../../types/resume";
 import { ErrorBoundary } from "../ErrorBoundary";
+import { CollapsibleContent } from "../ui/collapsible";
 import { BackgroundEducationSubsection } from "./BackgroundEducationSubsection";
 import { BackgroundSkillsSubsection } from "./BackgroundSkillsSubsection";
-import { CollapsibleContent } from "../ui/collapsible";
 import { SectionHeader } from "./SectionHeader";
 
 interface BackgroundSectionProps {
@@ -40,34 +40,33 @@ export const BackgroundSection = ({
 				</div>
 			}
 		>
-			<>
-				<SectionHeader
-					title={sectionTitle}
-					isOpen={isOpen}
-					attributes={attributes}
-					listeners={listeners}
-					visibilityControl="eye"
-					visibilityProps={{
-						isVisible,
-						onToggle: () => {
-							updateResumeData({
-								sectionsVisible: {
-									...resumeData.sectionsVisible,
-									education: !isVisible,
-									skills: !isVisible,
-								},
-							});
-						},
-					}}
-					onTitleChange={(newTitle) => {
+			<SectionHeader
+				title={sectionTitle}
+				isOpen={isOpen}
+				attributes={attributes}
+				listeners={listeners}
+				visibilityControl="eye"
+				visibilityProps={{
+					isVisible,
+					onToggle: () => {
 						updateResumeData({
-							sectionTitles: {
-								...resumeData.sectionTitles,
-								background: newTitle,
+							sectionsVisible: {
+								...resumeData.sectionsVisible,
+								education: !isVisible,
+								skills: !isVisible,
 							},
 						});
-					}}
-				/>
+					},
+				}}
+				onTitleChange={(newTitle) => {
+					updateResumeData({
+						sectionTitles: {
+							...resumeData.sectionTitles,
+							background: newTitle,
+						},
+					});
+				}}
+			/>
 			<CollapsibleContent>
 				<div className="flex flex-col gap-3">
 					<BackgroundSkillsSubsection
@@ -80,7 +79,6 @@ export const BackgroundSection = ({
 					/>
 				</div>
 			</CollapsibleContent>
-		</>
 		</ErrorBoundary>
 	);
 };

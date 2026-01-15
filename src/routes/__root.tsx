@@ -2,9 +2,9 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { Analytics } from "@vercel/analytics/react";
+import { NotFound } from "../components/NotFound";
 import { ThemeProvider } from "../components/ThemeProvider";
 import { TooltipProvider } from "../components/ui/tooltip";
-import { NotFound } from "../components/NotFound";
 import { createSeo } from "../lib/seo";
 
 import appCss from "../styles.css?url";

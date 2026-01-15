@@ -1,21 +1,17 @@
-import { Type, Layout, Settings } from "lucide-react";
+import { Layout, Settings, Type } from "lucide-react";
 import { Button } from "../../ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuTrigger,
-	DropdownMenuSub,
-	DropdownMenuSubTrigger,
-	DropdownMenuSubContent,
-	DropdownMenuSeparator,
 	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
+	DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "../../ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../../ui/tooltip";
 
 interface Font {
 	name: string;
@@ -232,8 +228,11 @@ export const PreviewConfiguration = ({
 								<Type className="size-4 mr-2" />
 								<span>Font</span>
 								<span className="ml-auto text-xs text-muted-foreground">
-									{fonts.find((f) => f.value === (fontFamily || fonts[0].value))
-										?.name}
+									{
+										fonts.find(
+											(f) => f.value === (fontFamily || fonts[0].value),
+										)?.name
+									}
 								</span>
 							</DropdownMenuSubTrigger>
 							<DropdownMenuSubContent

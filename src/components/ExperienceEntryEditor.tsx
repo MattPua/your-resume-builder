@@ -6,7 +6,7 @@ import {
 	GripVertical,
 	Trash2,
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import type { ExperienceEntry } from "../types/resume";
 import { SectionInput } from "./SectionInput";
 import { TextInput } from "./TextInput";
@@ -16,11 +16,7 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "./ui/collapsible";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 interface ExperienceEntryEditorProps {
 	entry: ExperienceEntry;
@@ -34,14 +30,14 @@ interface ExperienceEntryEditorProps {
 }
 
 export const ExperienceEntryEditor = ({
-  entry,
-  index,
-  onChange,
-  onDelete,
-  dragAttributes,
-  dragListeners,
-  isOpen: controlledIsOpen,
-  onOpenChange: controlledOnOpenChange,
+	entry,
+	index,
+	onChange,
+	onDelete,
+	dragAttributes,
+	dragListeners,
+	isOpen: controlledIsOpen,
+	onOpenChange: controlledOnOpenChange,
 }: ExperienceEntryEditorProps) => {
 	const [internalIsOpen, setInternalIsOpen] = useState(true);
 	const isOpen =
@@ -59,89 +55,94 @@ export const ExperienceEntryEditor = ({
 	const currentYear = new Date().getFullYear().toString();
 	const isHidden = entry.visible === false;
 
-  return (
+	return (
 		<Collapsible
 			open={isOpen}
 			onOpenChange={setIsOpen}
 			className={`border rounded-lg bg-gray-50 dark:bg-gray-900 ${isHidden ? "border-primary/40 dark:border-primary/30 border-dashed opacity-60" : "border-gray-200 dark:border-gray-700"}`}
 		>
-      <div className="p-4">
-        <CollapsibleTrigger className="flex items-center justify-between w-full mb-2 cursor-pointer gap-4">
-          <div className="flex items-center gap-2 min-w-0">
-            {dragListeners && dragAttributes && (
-              <button
-                type="button"
-                className="cursor-grab active:cursor-grabbing touch-none shrink-0"
-                {...dragListeners}
-                {...dragAttributes}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <GripVertical className="h-4 w-4 text-gray-400" />
-              </button>
-            )}
-            <h4 className="font-semibold text-gray-800 dark:text-gray-200 truncate text-left">
-              {entry.company || `Experience #${index + 1}`}
-            </h4>
-          </div>
-          <div className="flex items-center gap-3 shrink-0">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleFieldChange("visible", entry.visible === false);
-                  }}
-                  className="p-1.5 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
-                >
-                  {entry.visible !== false ? (
-                    <Eye className="h-4 w-4" />
-                  ) : (
-                    <EyeOff className="h-4 w-4" />
-                  )}
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{entry.visible !== false ? "Hide in preview" : "Show in preview"}</p>
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDelete(index);
-                  }}
-                  className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
-                  aria-label="Delete experience entry"
-                >
-                  <Trash2 className="size-4" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Delete entry</p>
-              </TooltipContent>
-            </Tooltip>
-            <ChevronDown
-              className={`h-4 w-4 text-gray-500 transition-transform ${
-                isOpen ? "transform rotate-180" : ""
-              }`}
-            />
-          </div>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
+			<div className="p-4">
+				<CollapsibleTrigger className="flex items-center justify-between w-full mb-2 cursor-pointer gap-4">
+					<div className="flex items-center gap-2 min-w-0">
+						{dragListeners && dragAttributes && (
+							<button
+								type="button"
+								className="cursor-grab active:cursor-grabbing touch-none shrink-0"
+								{...dragListeners}
+								{...dragAttributes}
+								onClick={(e) => e.stopPropagation()}
+							>
+								<GripVertical className="h-4 w-4 text-gray-400" />
+							</button>
+						)}
+						<h4 className="font-semibold text-gray-800 dark:text-gray-200 truncate text-left">
+							{entry.company || `Experience #${index + 1}`}
+						</h4>
+					</div>
+					<div className="flex items-center gap-3 shrink-0">
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<button
+									type="button"
+									onClick={(e) => {
+										e.stopPropagation();
+										handleFieldChange("visible", entry.visible === false);
+									}}
+									className="p-1.5 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 transition-colors"
+								>
+									{entry.visible !== false ? (
+										<Eye className="h-4 w-4" />
+									) : (
+										<EyeOff className="h-4 w-4" />
+									)}
+								</button>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>
+									{entry.visible !== false
+										? "Hide in preview"
+										: "Show in preview"}
+								</p>
+							</TooltipContent>
+						</Tooltip>
+						<Tooltip>
+							<TooltipTrigger asChild>
+								<button
+									type="button"
+									onClick={(e) => {
+										e.stopPropagation();
+										onDelete(index);
+									}}
+									className="p-2 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors"
+									aria-label="Delete experience entry"
+								>
+									<Trash2 className="size-4" />
+								</button>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>Delete entry</p>
+							</TooltipContent>
+						</Tooltip>
+						<ChevronDown
+							className={`h-4 w-4 text-gray-500 transition-transform ${
+								isOpen ? "transform rotate-180" : ""
+							}`}
+						/>
+					</div>
+				</CollapsibleTrigger>
+				<CollapsibleContent>
 					<div className="flex flex-col gap-4">
-        <TextInput
-          label="Job Title"
-          value={entry.title}
+						<TextInput
+							label="Job Title"
+							value={entry.title}
 							onChange={(value) => handleFieldChange("title", value)}
-          placeholder="Senior Developer"
-        />
-        <TextInput
-          label="Company Name"
-          value={entry.company}
+							placeholder="Senior Developer"
+						/>
+						<TextInput
+							label="Company Name"
+							value={entry.company}
 							onChange={(value) => handleFieldChange("company", value)}
-          placeholder="Company Inc."
+							placeholder="Company Inc."
 						/>
 						<TextInput
 							label="URL (optional)"
@@ -149,74 +150,74 @@ export const ExperienceEntryEditor = ({
 							value={entry.companyUrl || ""}
 							onChange={(value) => handleFieldChange("companyUrl", value)}
 							placeholder="https://company.com"
-        />
-            <div className="grid grid-cols-2 gap-3">
-          <TextInput
-            label="Start Date"
-            value={entry.startDate}
+						/>
+						<div className="grid grid-cols-2 gap-3">
+							<TextInput
+								label="Start Date"
+								value={entry.startDate}
 								onChange={(value) => handleFieldChange("startDate", value)}
-            placeholder="2020"
-          />
-          <TextInput
-            label="End Date"
-            value={entry.endDate}
+								placeholder="2020"
+							/>
+							<TextInput
+								label="End Date"
+								value={entry.endDate}
 								onChange={(value) => handleFieldChange("endDate", value)}
-            placeholder={`${currentYear} or Now`}
-          />
-        </div>
+								placeholder={`${currentYear} or Now`}
+							/>
+						</div>
 						<div className="flex flex-col gap-3">
-        <SectionInput
+							<SectionInput
 								ref={bulletPointsRef}
-          label="Bullet Points"
-          value={entry.bulletPoints}
+								label="Bullet Points"
+								value={entry.bulletPoints}
 								onChange={(value) => handleFieldChange("bulletPoints", value)}
-          placeholder="- Achievement or responsibility\n- Another point"
-        />
-              <div className="flex items-center justify-center">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        const currentBulletPoints =
-                          bulletPointsRef.current?.value ?? "";
-                        const currentDraft = draftRef.current?.value ?? "";
-                        onChange(index, {
-                          ...entry,
-                          bulletPoints: currentDraft,
-                          bulletPointsDraft: currentBulletPoints,
-                        });
-                      }}
-                    >
-                      <ArrowUpDown className="size-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Swap bullet points and draft</p>
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-              <SectionInput
+								placeholder="- Achievement or responsibility\n- Another point"
+							/>
+							<div className="flex items-center justify-center">
+								<Tooltip>
+									<TooltipTrigger asChild>
+										<Button
+											type="button"
+											variant="outline"
+											size="sm"
+											onClick={() => {
+												const currentBulletPoints =
+													bulletPointsRef.current?.value ?? "";
+												const currentDraft = draftRef.current?.value ?? "";
+												onChange(index, {
+													...entry,
+													bulletPoints: currentDraft,
+													bulletPointsDraft: currentBulletPoints,
+												});
+											}}
+										>
+											<ArrowUpDown className="size-4" />
+										</Button>
+									</TooltipTrigger>
+									<TooltipContent>
+										<p>Swap bullet points and draft</p>
+									</TooltipContent>
+								</Tooltip>
+							</div>
+							<SectionInput
 								ref={draftRef}
-                label="Draft (not shown in preview)"
-                value={entry.bulletPointsDraft || ""}
+								label="Draft (not shown in preview)"
+								value={entry.bulletPointsDraft || ""}
 								onChange={(value) =>
 									handleFieldChange("bulletPointsDraft", value)
 								}
-                placeholder="Draft bullet points..."
-              />
+								placeholder="Draft bullet points..."
+							/>
 							<SectionInput
 								label="Notes (not shown in preview)"
 								value={entry.notes || ""}
 								onChange={(value) => handleFieldChange("notes", value)}
 								placeholder="Private notes..."
 							/>
-            </div>
-          </div>
-        </CollapsibleContent>
-      </div>
-    </Collapsible>
+						</div>
+					</div>
+				</CollapsibleContent>
+			</div>
+		</Collapsible>
 	);
 };

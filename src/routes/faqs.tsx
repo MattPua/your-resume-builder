@@ -170,12 +170,11 @@ function FaqsPage() {
 		<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
 			<SiteHeader />
 
-			<main className="flex-1 max-w-4xl mx-auto px-4 py-12 sm:py-20">
+			<main className="flex-1 max-w-4xl mx-auto px-4 py-8 lg:py-12">
 				<div className="space-y-12">
-					{/* Header */}
 					<div className="space-y-4 text-left">
 						<Link
-							to="/"
+							to="/build"
 							className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline mb-4"
 						>
 							<ArrowLeft className="size-4" />

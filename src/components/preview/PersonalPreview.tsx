@@ -19,7 +19,8 @@ export const PersonalPreview = ({
 	layoutMode = "default",
 }: PersonalPreviewProps) => {
 	if (!personal) return null;
-	if (!personal.bulletPoints || personal.bulletPoints.trim() === "") return null;
+	if (!personal.bulletPoints || personal.bulletPoints.trim() === "")
+		return null;
 
 	return (
 		<SectionPreview

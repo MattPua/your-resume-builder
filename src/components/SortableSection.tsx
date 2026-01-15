@@ -1,6 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import React from "react";
+import type React from "react";
 import { Collapsible } from "./ui/collapsible";
 
 interface SortableSectionProps {

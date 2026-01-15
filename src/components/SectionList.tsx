@@ -1,15 +1,21 @@
 import type { ResumeData } from "../types/resume";
+import { SortableSection } from "./SortableSection";
 import { BackgroundSection } from "./sections/BackgroundSection";
 import { ExperienceSection } from "./sections/ExperienceSection";
 import { PersonalSection } from "./sections/PersonalSection";
 import { SideProjectsSection } from "./sections/SideProjectsSection";
 import { VolunteeringSection } from "./sections/VolunteeringSection";
-import { SortableSection } from "./SortableSection";
 
 interface SectionListProps {
 	resumeData: ResumeData;
 	updateResumeData: (data: Partial<ResumeData>) => void;
-	sectionOrder: ("experience" | "background" | "sideProjects" | "volunteering" | "personal")[];
+	sectionOrder: (
+		| "experience"
+		| "background"
+		| "sideProjects"
+		| "volunteering"
+		| "personal"
+	)[];
 	isExperienceOpen: boolean;
 	setIsExperienceOpen: (open: boolean) => void;
 	isBackgroundOpen: boolean;

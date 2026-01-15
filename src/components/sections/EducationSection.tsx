@@ -10,16 +10,14 @@ interface EducationSectionProps {
 	resumeData: ResumeData;
 	updateResumeData: (data: Partial<ResumeData>) => void;
 	isOpen: boolean;
-	onOpenChange: (open: boolean) => void;
-	attributes: any;
-	listeners: any;
+	attributes: React.HTMLAttributes<HTMLButtonElement>;
+	listeners: React.HTMLAttributes<HTMLButtonElement>;
 }
 
 export const EducationSection = ({
 	resumeData,
 	updateResumeData,
 	isOpen,
-	onOpenChange,
 	attributes,
 	listeners,
 }: EducationSectionProps) => {
@@ -37,9 +35,9 @@ export const EducationSection = ({
 				visibilityProps={{
 					isVisible: resumeData.sectionsVisible?.education !== false,
 					onToggle: () => {
-							updateResumeData({
-								sectionsVisible: {
-									...resumeData.sectionsVisible,
+						updateResumeData({
+							sectionsVisible: {
+								...resumeData.sectionsVisible,
 								education: resumeData.sectionsVisible?.education === false,
 							},
 						});
@@ -52,9 +50,9 @@ export const EducationSection = ({
 						sectionTitles: {
 							...resumeData.sectionTitles,
 							education: newTitle,
-								},
-							});
-						}}
+						},
+					});
+				}}
 			/>
 			<CollapsibleContent>
 				<div className="flex flex-col gap-4">
@@ -88,7 +86,7 @@ export const EducationSection = ({
 						<div className="flex flex-col gap-4">
 							{resumeData.education.map((entry, index) => (
 								<EducationEntryEditor
-									key={index}
+									key={`${entry.institution}-${entry.degree}-${index}`}
 									entry={entry}
 									index={index}
 									onChange={(idx, updatedEntry) => {
@@ -98,12 +96,19 @@ export const EducationSection = ({
 									}}
 									onDelete={(idx) => {
 										const entry = resumeData.education[idx];
-										const entryTitle = entry.institution || entry.degree || `Education #${idx + 1}`;
-										if (window.confirm(`Are you sure you want to delete "${entryTitle}"?`)) {
-										const updated = resumeData.education.filter(
-											(_, i) => i !== idx,
-										);
-										updateResumeData({ education: updated });
+										const entryTitle =
+											entry.institution ||
+											entry.degree ||
+											`Education #${idx + 1}`;
+										if (
+											window.confirm(
+												`Are you sure you want to delete "${entryTitle}"?`,
+											)
+										) {
+											const updated = resumeData.education.filter(
+												(_, i) => i !== idx,
+											);
+											updateResumeData({ education: updated });
 										}
 									}}
 								/>

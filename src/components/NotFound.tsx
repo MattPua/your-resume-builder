@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { FileQuestion, Home, Search, Compass } from "lucide-react";
+import { Compass, FileQuestion, Home, Search } from "lucide-react";
 import { SiteFooter } from "./layout/SiteFooter";
 import { SiteHeader } from "./layout/SiteHeader";
 import { Button } from "./ui/button";
@@ -28,14 +28,14 @@ export const NotFound = () => {
 						Whoops! You've wandered off the grid.
 					</h2>
 					<p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed">
-						Even the best resumes have typos, but this page is a total "no-show."
-						Maybe it's taking a personal day?
+						Even the best resumes have typos, but this page is a total
+						"no-show." Maybe it's taking a personal day?
 					</p>
 				</div>
 
 				<div className="flex flex-col sm:flex-row gap-4 mt-10 animate-in fade-in slide-in-from-bottom-12 duration-1000">
 					<Button asChild size="lg" className="gap-2 px-8 py-6 text-lg">
-						<Link to="/">
+						<Link to="/build">
 							<Home className="size-5" />
 							Back to Builder
 						</Link>

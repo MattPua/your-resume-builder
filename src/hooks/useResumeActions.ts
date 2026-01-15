@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
-import type { ResumeData } from "../types/resume";
-import { exportToPDF } from "../lib/pdfExport";
 import { convertToMarkdown } from "../lib/markdownExport";
-import { convertToPlainText } from "../lib/textExport";
 import { parseMarkdownToResumeData } from "../lib/markdownImport";
+import { exportToPDF } from "../lib/pdfExport";
+import { convertToPlainText } from "../lib/textExport";
+import type { ResumeData } from "../types/resume";
 
 interface UseResumeActionsProps {
 	resumeData: ResumeData;
@@ -24,12 +24,24 @@ export const useResumeActions = ({
 	const generateFilename = (extension: string) => {
 		const name = resumeData.name.trim() || "resume";
 		// Sanitize name: remove invalid filename characters
-		const sanitizedName = name.replace(/[^a-zA-Z0-9\s-_]/g, "").replace(/\s+/g, "-");
-		
+		const sanitizedName = name
+			.replace(/[^a-zA-Z0-9\s-_]/g, "")
+			.replace(/\s+/g, "-");
+
 		const now = new Date();
 		const monthNames = [
-			"January", "February", "March", "April", "May", "June",
-			"July", "August", "September", "October", "November", "December"
+			"January",
+			"February",
+			"March",
+			"April",
+			"May",
+			"June",
+			"July",
+			"August",
+			"September",
+			"October",
+			"November",
+			"December",
 		];
 		const month = monthNames[now.getMonth()];
 		const year = String(now.getFullYear());
@@ -136,8 +148,10 @@ export const useResumeActions = ({
 		const file = e.target.files?.[0];
 		if (!file) return;
 
-		const isJson = file.name.endsWith(".json") || file.type === "application/json";
-		const isMarkdown = file.name.endsWith(".md") || file.type === "text/markdown";
+		const isJson =
+			file.name.endsWith(".json") || file.type === "application/json";
+		const isMarkdown =
+			file.name.endsWith(".md") || file.type === "text/markdown";
 
 		const reader = new FileReader();
 		reader.onload = (event) => {

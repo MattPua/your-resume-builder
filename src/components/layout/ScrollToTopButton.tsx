@@ -1,10 +1,6 @@
 import { ArrowUp } from "lucide-react";
 import { Button } from "../ui/button";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "../ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface ScrollToTopButtonProps {
 	isVisible: boolean;

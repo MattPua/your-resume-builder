@@ -19,16 +19,16 @@ export const SectionInput = forwardRef<HTMLTextAreaElement, SectionInputProps>(
 
 		const updateHeight = useCallback(() => {
 			const textarea = textareaRef.current;
-    if (textarea) {
+			if (textarea) {
 				textarea.style.height = "auto";
 				textarea.style.height = `${textarea.scrollHeight}px`;
-    }
+			}
 		}, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 			if (!isUndoRedoRef.current) {
 				onChange(e.target.value);
-  }
+			}
 			updateHeight();
 		};
 
@@ -76,14 +76,14 @@ export const SectionInput = forwardRef<HTMLTextAreaElement, SectionInputProps>(
 			}
 		}, [value, updateHeight]);
 
-  return (
+		return (
 			<Field orientation="vertical">
 				{label && (
 					<FieldLabel
 						htmlFor={textareaId}
 						className="text-sm font-semibold text-gray-700 dark:text-gray-300"
 					>
-        {label}
+						{label}
 					</FieldLabel>
 				)}
 				<FieldContent>
@@ -98,12 +98,12 @@ export const SectionInput = forwardRef<HTMLTextAreaElement, SectionInputProps>(
 							}
 						}}
 						defaultValue={value}
-        onChange={handleChange}
+						onChange={handleChange}
 						onInput={handleInput}
 						onKeyDown={handleKeyDown}
-        placeholder={placeholder}
+						placeholder={placeholder}
 						className="w-full min-h-32 resize-none"
-      />
+					/>
 				</FieldContent>
 			</Field>
 		);

@@ -1,14 +1,10 @@
 import { ChevronDown, Eye, EyeOff, GripVertical } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Checkbox } from "../ui/checkbox";
 import { CollapsibleTrigger } from "../ui/collapsible";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "../ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 interface SectionHeaderProps {
 	title: string;
@@ -144,7 +140,9 @@ export const SectionHeader = ({
 					</button>
 				</TooltipTrigger>
 				<TooltipContent>
-					<p>{visibilityProps.isVisible ? "Hide in preview" : "Show in preview"}</p>
+					<p>
+						{visibilityProps.isVisible ? "Hide in preview" : "Show in preview"}
+					</p>
 				</TooltipContent>
 			</Tooltip>
 		);

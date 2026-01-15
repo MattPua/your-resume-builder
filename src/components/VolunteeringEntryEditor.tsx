@@ -6,7 +6,7 @@ import {
 	GripVertical,
 	Trash2,
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import type { VolunteeringEntry } from "../types/resume";
 import { SectionInput } from "./SectionInput";
 import { TextInput } from "./TextInput";
@@ -16,11 +16,7 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "./ui/collapsible";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 interface VolunteeringEntryEditorProps {
 	entry: VolunteeringEntry;
@@ -104,13 +100,16 @@ export const VolunteeringEntryEditor = ({
 							</TooltipTrigger>
 							<TooltipContent>
 								<p>
-									{entry.visible !== false ? "Hide in preview" : "Show in preview"}
+									{entry.visible !== false
+										? "Hide in preview"
+										: "Show in preview"}
 								</p>
 							</TooltipContent>
 						</Tooltip>
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<button
+									type="button"
 									onClick={(e) => {
 										e.stopPropagation();
 										onDelete(index);

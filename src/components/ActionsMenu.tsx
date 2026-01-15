@@ -20,11 +20,7 @@ import {
 	DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 interface ActionsMenuProps {
 	fileInputRef: React.RefObject<HTMLInputElement | null>;
@@ -91,7 +87,9 @@ export const ActionsMenu = ({
 							size="sm"
 							className="rounded-r-none h-9 relative z-10"
 							aria-label={
-								allSectionsCollapsed ? "Expand all sections" : "Collapse all sections"
+								allSectionsCollapsed
+									? "Expand all sections"
+									: "Collapse all sections"
 							}
 						>
 							<ChevronsUpDown className="size-4" />
@@ -99,7 +97,11 @@ export const ActionsMenu = ({
 						</Button>
 					</TooltipTrigger>
 					<TooltipContent>
-						<p>{allSectionsCollapsed ? "Expand all sections" : "Collapse all sections"}</p>
+						<p>
+							{allSectionsCollapsed
+								? "Expand all sections"
+								: "Collapse all sections"}
+						</p>
 					</TooltipContent>
 				</Tooltip>
 				<DropdownMenu>
@@ -125,42 +127,60 @@ export const ActionsMenu = ({
 							<DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70">
 								Import
 							</DropdownMenuLabel>
-							<DropdownMenuItem onClick={onImportJSON} className="cursor-pointer">
+							<DropdownMenuItem
+								onClick={onImportJSON}
+								className="cursor-pointer"
+							>
 								<Upload className="mr-2 size-4" />
 								Import from JSON
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={onImportMarkdown} className="cursor-pointer">
+							<DropdownMenuItem
+								onClick={onImportMarkdown}
+								className="cursor-pointer"
+							>
 								<FileDown className="mr-2 size-4 rotate-180" />
 								Import from Markdown file
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={onImportMarkdownText} className="cursor-pointer">
+							<DropdownMenuItem
+								onClick={onImportMarkdownText}
+								className="cursor-pointer"
+							>
 								<FileText className="mr-2 size-4" />
 								Import from Markdown text
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
-						
+
 						<DropdownMenuSeparator />
-						
+
 						<DropdownMenuGroup>
 							<DropdownMenuLabel className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/70">
 								Export
 							</DropdownMenuLabel>
-							<DropdownMenuItem onClick={onExportJSON} className="cursor-pointer">
+							<DropdownMenuItem
+								onClick={onExportJSON}
+								className="cursor-pointer"
+							>
 								<FileCode className="mr-2 size-4" />
 								Export to JSON
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={onExportMarkdown} className="cursor-pointer">
+							<DropdownMenuItem
+								onClick={onExportMarkdown}
+								className="cursor-pointer"
+							>
 								<FileDown className="mr-2 size-4" />
 								Export to Markdown
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={onExportText} className="cursor-pointer">
+							<DropdownMenuItem
+								onClick={onExportText}
+								className="cursor-pointer"
+							>
 								<FileText className="mr-2 size-4" />
 								Export to Text
 							</DropdownMenuItem>
 						</DropdownMenuGroup>
-						
+
 						<DropdownMenuSeparator />
-						
+
 						<DropdownMenuItem
 							onClick={onClearAll}
 							className="cursor-pointer text-red-600 focus:text-red-600 dark:text-red-400 dark:focus:text-red-400"
@@ -169,7 +189,7 @@ export const ActionsMenu = ({
 							Reset resume
 						</DropdownMenuItem>
 					</DropdownMenuContent>
-			</DropdownMenu>
+				</DropdownMenu>
 			</div>
 		</div>
 	);

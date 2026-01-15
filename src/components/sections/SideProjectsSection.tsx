@@ -13,12 +13,12 @@ import {
 	sortableKeyboardCoordinates,
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { ChevronsUpDown, Plus, Folder } from "lucide-react";
+import { ChevronsUpDown, Folder, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ResumeData, SideProjectEntry } from "../../types/resume";
+import { EmptySectionState } from "../EmptySectionState";
 import { ErrorBoundary } from "../ErrorBoundary";
 import { SortableSideProjectEntry } from "../SortableSideProjectEntry";
-import { EmptySectionState } from "../EmptySectionState";
 import { Button } from "../ui/button";
 import { CollapsibleContent } from "../ui/collapsible";
 import { SectionHeader } from "./SectionHeader";
@@ -59,7 +59,7 @@ export const SideProjectsSection = ({
 		if (Object.keys(newStates).length !== Object.keys(entryOpenStates).length) {
 			setEntryOpenStates(newStates);
 		}
-	}, [resumeData.sideProjects.length]);
+	}, [entryOpenStates, resumeData.sideProjects.forEach]);
 
 	const handleEntryOpenChange = (index: number, open: boolean) => {
 		setEntryOpenStates((prev) => ({ ...prev, [index]: open }));
@@ -82,9 +82,11 @@ export const SideProjectsSection = ({
 		if (over && active.id !== over.id) {
 			const activeIndex = parseInt(
 				(active.id as string).replace("sideproject-", ""),
+				10,
 			);
 			const overIndex = parseInt(
 				(over.id as string).replace("sideproject-", ""),
+				10,
 			);
 
 			const reordered = arrayMove(
@@ -109,80 +111,37 @@ export const SideProjectsSection = ({
 				</div>
 			}
 		>
-			<>
-				<SectionHeader
-					title={sectionTitle}
-					isOpen={isOpen}
-					attributes={attributes}
-					listeners={listeners}
-					visibilityControl="eye"
-					visibilityProps={{
-						isVisible,
-						onToggle: () => {
-							updateResumeData({
-								sectionsVisible: {
-									...resumeData.sectionsVisible,
-									sideProjects: !isVisible,
-								},
-							});
-						},
-					}}
-					onTitleChange={(newTitle) => {
+			<SectionHeader
+				title={sectionTitle}
+				isOpen={isOpen}
+				attributes={attributes}
+				listeners={listeners}
+				visibilityControl="eye"
+				visibilityProps={{
+					isVisible,
+					onToggle: () => {
 						updateResumeData({
-							sectionTitles: {
-								...resumeData.sectionTitles,
-								sideProjects: newTitle,
-								},
-							});
-						}}
-				/>
+							sectionsVisible: {
+								...resumeData.sectionsVisible,
+								sideProjects: !isVisible,
+							},
+						});
+					},
+				}}
+				onTitleChange={(newTitle) => {
+					updateResumeData({
+						sectionTitles: {
+							...resumeData.sectionTitles,
+							sideProjects: newTitle,
+						},
+					});
+				}}
+			/>
 			<CollapsibleContent>
-					<div className="flex flex-col gap-3">
-						{resumeData.sideProjects.length > 0 && (
-							<div className="flex items-center justify-between">
-								<Button
-									onClick={() => {
-										const newEntry: SideProjectEntry = {
-											title: "",
-											description: "",
-											startDate: "",
-											endDate: "",
-											bulletPoints: "",
-											visible: true,
-										};
-										updateResumeData({
-											sideProjects: [newEntry, ...resumeData.sideProjects],
-										});
-									}}
-									size="sm"
-									variant="default"
-								>
-									<Plus className="size-4" />
-									Add Side Project
-								</Button>
-								<Button
-									onClick={() => {
-										const newState = !allExpanded;
-										const newStates: Record<number, boolean> = {};
-										resumeData.sideProjects.forEach((_, index) => {
-											newStates[index] = newState;
-										});
-										setEntryOpenStates(newStates);
-									}}
-									size="sm"
-									variant="outline"
-									className="text-xs"
-								>
-									<ChevronsUpDown className="size-3 mr-1" />
-									{allExpanded ? "Collapse All" : "Expand All"}
-								</Button>
-							</div>
-						)}
-						{resumeData.sideProjects.length === 0 ? (
-							<EmptySectionState
-								icon={Folder}
-								title="No side projects"
-								description="Highlight your personal projects, open-source contributions, or apps you've built."
+				<div className="flex flex-col gap-3">
+					{resumeData.sideProjects.length > 0 && (
+						<div className="flex items-center justify-between">
+							<Button
 								onClick={() => {
 									const newEntry: SideProjectEntry = {
 										title: "",
@@ -196,66 +155,110 @@ export const SideProjectsSection = ({
 										sideProjects: [newEntry, ...resumeData.sideProjects],
 									});
 								}}
-								buttonText="Add Side Project"
-							/>
-						) : (
-							<>
-							<DndContext
-								sensors={entrySensors}
-								collisionDetection={closestCenter}
-								onDragEnd={handleEntryDragEnd}
+								size="sm"
+								variant="default"
 							>
-								<SortableContext
-									items={resumeData.sideProjects.map(
-										(_, index) => `sideproject-${index}`,
-									)}
-									strategy={verticalListSortingStrategy}
-								>
-										<div className="flex flex-col gap-3">
-										{resumeData.sideProjects.map((entry, index) => (
-											<SortableSideProjectEntry
-												key={index}
-												entry={entry}
-												index={index}
-												onChange={(idx, updatedEntry) => {
-													const updated = [...resumeData.sideProjects];
-													updated[idx] = updatedEntry;
-													updateResumeData({ sideProjects: updated });
-												}}
-												onDelete={(idx) => {
-														const entry = resumeData.sideProjects[idx];
-														const entryTitle = entry.title || `Side Project #${idx + 1}`;
-														if (window.confirm(`Are you sure you want to delete "${entryTitle}"?`)) {
+								<Plus className="size-4" />
+								Add Side Project
+							</Button>
+							<Button
+								onClick={() => {
+									const newState = !allExpanded;
+									const newStates: Record<number, boolean> = {};
+									resumeData.sideProjects.forEach((_, index) => {
+										newStates[index] = newState;
+									});
+									setEntryOpenStates(newStates);
+								}}
+								size="sm"
+								variant="outline"
+								className="text-xs"
+							>
+								<ChevronsUpDown className="size-3 mr-1" />
+								{allExpanded ? "Collapse All" : "Expand All"}
+							</Button>
+						</div>
+					)}
+					{resumeData.sideProjects.length === 0 ? (
+						<EmptySectionState
+							icon={Folder}
+							title="No side projects"
+							description="Highlight your personal projects, open-source contributions, or apps you've built."
+							onClick={() => {
+								const newEntry: SideProjectEntry = {
+									title: "",
+									description: "",
+									startDate: "",
+									endDate: "",
+									bulletPoints: "",
+									visible: true,
+								};
+								updateResumeData({
+									sideProjects: [newEntry, ...resumeData.sideProjects],
+								});
+							}}
+							buttonText="Add Side Project"
+						/>
+					) : (
+						<DndContext
+							sensors={entrySensors}
+							collisionDetection={closestCenter}
+							onDragEnd={handleEntryDragEnd}
+						>
+							<SortableContext
+								items={resumeData.sideProjects.map(
+									(_, index) => `sideproject-${index}`,
+								)}
+								strategy={verticalListSortingStrategy}
+							>
+								<div className="flex flex-col gap-3">
+									{resumeData.sideProjects.map((entry, index) => (
+										<SortableSideProjectEntry
+											key={index}
+											entry={entry}
+											index={index}
+											onChange={(idx, updatedEntry) => {
+												const updated = [...resumeData.sideProjects];
+												updated[idx] = updatedEntry;
+												updateResumeData({ sideProjects: updated });
+											}}
+											onDelete={(idx) => {
+												const entry = resumeData.sideProjects[idx];
+												const entryTitle =
+													entry.title || `Side Project #${idx + 1}`;
+												if (
+													window.confirm(
+														`Are you sure you want to delete "${entryTitle}"?`,
+													)
+												) {
 													const updated = resumeData.sideProjects.filter(
 														(_, i) => i !== idx,
 													);
 													updateResumeData({ sideProjects: updated });
-															const newStates = { ...entryOpenStates };
-															delete newStates[idx];
-															Object.keys(newStates).forEach((key) => {
-																const numKey = Number(key);
-																if (numKey > idx) {
-																	newStates[numKey - 1] = newStates[numKey];
-																	delete newStates[numKey];
-																}
-															});
-															setEntryOpenStates(newStates);
+													const newStates = { ...entryOpenStates };
+													delete newStates[idx];
+													Object.keys(newStates).forEach((key) => {
+														const numKey = Number(key);
+														if (numKey > idx) {
+															newStates[numKey - 1] = newStates[numKey];
+															delete newStates[numKey];
 														}
-												}}
-													isOpen={entryOpenStates[index] !== false}
-													onOpenChange={(open) =>
-														handleEntryOpenChange(index, open)
-													}
-											/>
-										))}
-									</div>
-								</SortableContext>
-							</DndContext>
-						</>
+													});
+													setEntryOpenStates(newStates);
+												}
+											}}
+											isOpen={entryOpenStates[index] !== false}
+											onOpenChange={(open) =>
+												handleEntryOpenChange(index, open)
+											}
+										/>
+									))}
+								</div>
+							</SortableContext>
+						</DndContext>
 					)}
 				</div>
 			</CollapsibleContent>
-		</>
 		</ErrorBoundary>
 	);
 };

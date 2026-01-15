@@ -45,42 +45,40 @@ export const BackgroundPreview = ({
 					<div className="flex flex-col gap-1">
 						{education.map((entry, index) => (
 							<div key={`${entry.institution}-${entry.degree}-${index}`}>
-								<div className="flex flex-col items-start gap-0">
-									<div>
-										<h3
-											className="text-base font-semibold text-gray-900"
-											style={{ color: "#111827" }}
-										>
-											{entry.degree}
-											{entry.institution && (
-												<>
-													{" @ "}
-													{entry.institutionUrl ? (
-														<a
-															href={entry.institutionUrl}
-															target="_blank"
-															rel="noopener noreferrer"
-															style={{
-																color: "#111827",
-																textDecoration: "none",
-															}}
-														>
-															{entry.institution}
-														</a>
-													) : (
-														entry.institution
-													)}
-												</>
-											)}
-										</h3>
-									</div>
+								<div className="flex items-baseline justify-between gap-4">
+									<h3
+										className="text-base font-semibold text-gray-900"
+										style={{ color: "#111827" }}
+									>
+										{entry.degree}
+										{entry.institution && (
+											<>
+												{" @ "}
+												{entry.institutionUrl ? (
+													<a
+														href={entry.institutionUrl}
+														target="_blank"
+														rel="noopener noreferrer"
+														style={{
+															color: "#111827",
+															textDecoration: "none",
+														}}
+													>
+														{entry.institution}
+													</a>
+												) : (
+													entry.institution
+												)}
+											</>
+										)}
+									</h3>
 									{(entry.startDate || entry.endDate) && (
 										<span
-											className="text-sm text-gray-600 italic whitespace-nowrap"
+											className="text-sm text-gray-600 italic whitespace-nowrap shrink-0"
 											style={{ color: "#4b5563" }}
 										>
 											{entry.startDate}{" "}
-											{entry.endDate ? `- ${entry.endDate}` : ""}
+											{entry.endDate ? `— ${entry.endDate}` : ""}
 										</span>
 									)}
 								</div>

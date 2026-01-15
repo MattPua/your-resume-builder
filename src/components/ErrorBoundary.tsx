@@ -1,5 +1,5 @@
-import { Component, type ReactNode } from "react";
 import { AlertCircle } from "lucide-react";
+import { Component, type ReactNode } from "react";
 import { Button } from "./ui/button";
 
 interface ErrorBoundaryProps {

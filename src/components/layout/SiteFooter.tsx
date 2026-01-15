@@ -54,6 +54,16 @@ export const SiteFooter = () => {
 						</Link>
 						<span className="text-gray-300 dark:text-gray-700">|</span>
 						<Link
+							to="/build"
+							className="text-xs text-gray-400 dark:text-gray-500 hover:text-primary transition-colors"
+							activeProps={{
+								className: "text-primary dark:text-primary font-semibold",
+							}}
+						>
+							Build
+						</Link>
+						<span className="text-gray-300 dark:text-gray-700">|</span>
+						<Link
 							to="/faqs"
 							className="text-xs text-gray-400 dark:text-gray-500 hover:text-primary transition-colors"
 							activeProps={{

@@ -1,10 +1,7 @@
 import type { ResumeData } from "../../types/resume";
 import { ErrorBoundary } from "../ErrorBoundary";
 import { TextInput } from "../TextInput";
-import {
-	Collapsible,
-	CollapsibleContent,
-} from "../ui/collapsible";
+import { Collapsible, CollapsibleContent } from "../ui/collapsible";
 import { SectionHeader } from "./SectionHeader";
 
 interface HeaderSectionProps {
@@ -47,62 +44,62 @@ export const HeaderSection = ({
 				id="section-header"
 			>
 				<div className="p-6">
-				<SectionHeader
-					title={sectionTitle}
-					isOpen={isOpen}
-					visibilityControl="eye"
-					visibilityProps={{
-						isVisible,
-						onToggle: () => {
-									updateResumeData({
-										sectionsVisible: {
-											...resumeData.sectionsVisible,
-											header: !isVisible,
-										},
-									});
-						},
-					}}
+					<SectionHeader
+						title={sectionTitle}
+						isOpen={isOpen}
+						visibilityControl="eye"
+						visibilityProps={{
+							isVisible,
+							onToggle: () => {
+								updateResumeData({
+									sectionsVisible: {
+										...resumeData.sectionsVisible,
+										header: !isVisible,
+									},
+								});
+							},
+						}}
+					/>
+					<CollapsibleContent>
+						<div className="flex flex-col gap-4">
+							<TextInput
+								label="Name"
+								value={resumeData.name}
+								onChange={(value) => updateResumeData({ name: value })}
+								placeholder="Your Full Name"
 							/>
-				<CollapsibleContent>
-					<div className="flex flex-col gap-4">
-						<TextInput
-							label="Name"
-							value={resumeData.name}
-							onChange={(value) => updateResumeData({ name: value })}
-							placeholder="Your Full Name"
-						/>
-						<TextInput
-							label="Email"
-							type="email"
-							value={resumeData.email}
-							onChange={(value) => updateResumeData({ email: value })}
-							placeholder="your.email@example.com"
-						/>
-						<TextInput
-							label="Phone"
-							type="tel"
-							value={resumeData.phone}
-							onChange={(value) => updateResumeData({ phone: value })}
-							placeholder="(123) 456-7890"
-						/>
-						<TextInput
-							label="Website"
-							type="url"
-							value={resumeData.website}
-							onChange={(value) => updateResumeData({ website: value })}
-							placeholder="https://yourwebsite.com"
-						/>
-						<TextInput
-							label="GitHub"
-							type="url"
-							value={resumeData.github}
-							onChange={(value) => updateResumeData({ github: value })}
-							placeholder="https://github.com/username"
-						/>
-					</div>
-				</CollapsibleContent>
-			</div>
-		</Collapsible>
+							<TextInput
+								label="Email"
+								type="email"
+								value={resumeData.email}
+								onChange={(value) => updateResumeData({ email: value })}
+								placeholder="your.email@example.com"
+							/>
+							<TextInput
+								label="Phone"
+								type="tel"
+								value={resumeData.phone}
+								onChange={(value) => updateResumeData({ phone: value })}
+								placeholder="(123) 456-7890"
+							/>
+							<TextInput
+								label="Website"
+								type="url"
+								value={resumeData.website}
+								onChange={(value) => updateResumeData({ website: value })}
+								placeholder="https://yourwebsite.com"
+							/>
+							<TextInput
+								label="GitHub"
+								type="url"
+								value={resumeData.github}
+								onChange={(value) => updateResumeData({ github: value })}
+								placeholder="https://github.com/username"
+							/>
+						</div>
+					</CollapsibleContent>
+				</div>
+			</Collapsible>
 		</ErrorBoundary>
 	);
 };

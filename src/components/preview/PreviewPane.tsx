@@ -1,9 +1,9 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { ResumeData } from "../../types/resume";
 import { ErrorBoundary } from "../ErrorBoundary";
 import { ResumePreview } from "../ResumePreview";
-import type { ResumeData } from "../../types/resume";
-import { ZoomControls } from "./controls/ZoomControls";
 import { PreviewConfiguration } from "./controls/PreviewConfiguration";
+import { ZoomControls } from "./controls/ZoomControls";
 
 interface PreviewPaneProps {
 	resumeData: ResumeData;
@@ -21,7 +21,9 @@ export const PreviewPane = ({
 	const previewContainerRef = useRef<HTMLDivElement>(null);
 	const [scale, setScale] = useState(1);
 	const [zoomLevel, setZoomLevel] = useState(1);
-	const [previewFontFamily, setPreviewFontFamily] = useState<string | null>(null);
+	const [previewFontFamily, setPreviewFontFamily] = useState<string | null>(
+		null,
+	);
 
 	useEffect(() => {
 		const updateScale = () => {
@@ -64,7 +66,9 @@ export const PreviewPane = ({
 								updateResumeData({ sectionHeaderTextColor: color })
 							}
 							layoutMode={resumeData.layoutMode || "default"}
-							onLayoutModeChange={(mode) => updateResumeData({ layoutMode: mode })}
+							onLayoutModeChange={(mode) =>
+								updateResumeData({ layoutMode: mode })
+							}
 							fontFamily={resumeData.fontFamily || fonts[0].value}
 							onFontFamilyChange={(font) => {
 								setPreviewFontFamily(null);

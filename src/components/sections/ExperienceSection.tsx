@@ -13,35 +13,34 @@ import {
 	sortableKeyboardCoordinates,
 	verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { ChevronsUpDown, Plus } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Briefcase, ChevronsUpDown, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { ExperienceEntry, ResumeData } from "../../types/resume";
+import { EmptySectionState } from "../EmptySectionState";
 import { ErrorBoundary } from "../ErrorBoundary";
 import { SortableExperienceEntry } from "../SortableExperienceEntry";
-import { EmptySectionState } from "../EmptySectionState";
 import { Button } from "../ui/button";
 import { CollapsibleContent } from "../ui/collapsible";
 import { SectionHeader } from "./SectionHeader";
-import { Briefcase } from "lucide-react";
 
 interface ExperienceSectionProps {
 	resumeData: ResumeData;
 	updateResumeData: (data: Partial<ResumeData>) => void;
 	isOpen: boolean;
-	onOpenChange: (open: boolean) => void;
-	attributes: any;
-	listeners: any;
+	attributes: React.HTMLAttributes<HTMLButtonElement>;
+	listeners: React.HTMLAttributes<HTMLButtonElement>;
 }
 
 export const ExperienceSection = ({
 	resumeData,
 	updateResumeData,
 	isOpen,
-	onOpenChange,
 	attributes,
 	listeners,
 }: ExperienceSectionProps) => {
-	const [entryOpenStates, setEntryOpenStates] = useState<Record<number, boolean>>({});
+	const [entryOpenStates, setEntryOpenStates] = useState<
+		Record<number, boolean>
+	>({});
 	const isVisible = resumeData.sectionsVisible?.experience !== false;
 	const sectionTitle = resumeData.sectionTitles?.experience || "Experience";
 
@@ -57,13 +56,15 @@ export const ExperienceSection = ({
 		if (Object.keys(newStates).length !== Object.keys(entryOpenStates).length) {
 			setEntryOpenStates(newStates);
 		}
-	}, [resumeData.experience.length]);
+	}, [entryOpenStates, resumeData.experience.forEach]);
 
 	const handleEntryOpenChange = (index: number, open: boolean) => {
 		setEntryOpenStates((prev) => ({ ...prev, [index]: open }));
 	};
 
-	const allExpanded = Object.values(entryOpenStates).every((state) => state === true);
+	const allExpanded = Object.values(entryOpenStates).every(
+		(state) => state === true,
+	);
 
 	const entrySensors = useSensors(
 		useSensor(PointerSensor),
@@ -78,10 +79,18 @@ export const ExperienceSection = ({
 		if (over && active.id !== over.id) {
 			const activeIndex = parseInt(
 				(active.id as string).replace("experience-", ""),
+				10,
 			);
-			const overIndex = parseInt((over.id as string).replace("experience-", ""));
+			const overIndex = parseInt(
+				(over.id as string).replace("experience-", ""),
+				10,
+			);
 
-			const reordered = arrayMove(resumeData.experience, activeIndex, overIndex);
+			const reordered = arrayMove(
+				resumeData.experience,
+				activeIndex,
+				overIndex,
+			);
 			updateResumeData({ experience: reordered });
 		}
 	};
@@ -99,33 +108,32 @@ export const ExperienceSection = ({
 				</div>
 			}
 		>
-			<>
-				<SectionHeader
-					title={sectionTitle}
-					isOpen={isOpen}
-					attributes={attributes}
-					listeners={listeners}
-					visibilityControl="eye"
-					visibilityProps={{
-						isVisible,
-						onToggle: () => {
-							updateResumeData({
-								sectionsVisible: {
-									...resumeData.sectionsVisible,
-									experience: !isVisible,
-								},
-							});
-						},
-					}}
-					onTitleChange={(newTitle) => {
+			<SectionHeader
+				title={sectionTitle}
+				isOpen={isOpen}
+				attributes={attributes}
+				listeners={listeners}
+				visibilityControl="eye"
+				visibilityProps={{
+					isVisible,
+					onToggle: () => {
 						updateResumeData({
-							sectionTitles: {
-								...resumeData.sectionTitles,
-								experience: newTitle,
+							sectionsVisible: {
+								...resumeData.sectionsVisible,
+								experience: !isVisible,
 							},
 						});
-					}}
-				/>
+					},
+				}}
+				onTitleChange={(newTitle) => {
+					updateResumeData({
+						sectionTitles: {
+							...resumeData.sectionTitles,
+							experience: newTitle,
+						},
+					});
+				}}
+			/>
 			<CollapsibleContent>
 				<div className="flex flex-col gap-3">
 					{resumeData.experience.length > 0 && (
@@ -189,59 +197,67 @@ export const ExperienceSection = ({
 							buttonText="Add Experience"
 						/>
 					) : (
-						<>
-							<DndContext
-								sensors={entrySensors}
-								collisionDetection={closestCenter}
-								onDragEnd={handleEntryDragEnd}
+						<DndContext
+							sensors={entrySensors}
+							collisionDetection={closestCenter}
+							onDragEnd={handleEntryDragEnd}
+						>
+							<SortableContext
+								items={resumeData.experience.map(
+									(_, index) => `experience-${index}`,
+								)}
+								strategy={verticalListSortingStrategy}
 							>
-								<SortableContext
-									items={resumeData.experience.map((_, index) => `experience-${index}`)}
-									strategy={verticalListSortingStrategy}
-								>
-									<div className="flex flex-col gap-3">
-										{resumeData.experience.map((entry, index) => (
-											<SortableExperienceEntry
-												key={index}
-												entry={entry}
-												index={index}
-												onChange={(idx, updatedEntry) => {
-													const updated = [...resumeData.experience];
-													updated[idx] = updatedEntry;
-													updateResumeData({ experience: updated });
-												}}
-												onDelete={(idx) => {
-													const entry = resumeData.experience[idx];
-													const entryTitle = entry.company || entry.title || `Experience #${idx + 1}`;
-													if (window.confirm(`Are you sure you want to delete "${entryTitle}"?`)) {
+								<div className="flex flex-col gap-3">
+									{resumeData.experience.map((entry, index) => (
+										<SortableExperienceEntry
+											key={index}
+											entry={entry}
+											index={index}
+											onChange={(idx, updatedEntry) => {
+												const updated = [...resumeData.experience];
+												updated[idx] = updatedEntry;
+												updateResumeData({ experience: updated });
+											}}
+											onDelete={(idx) => {
+												const entry = resumeData.experience[idx];
+												const entryTitle =
+													entry.company ||
+													entry.title ||
+													`Experience #${idx + 1}`;
+												if (
+													window.confirm(
+														`Are you sure you want to delete "${entryTitle}"?`,
+													)
+												) {
 													const updated = resumeData.experience.filter(
 														(_, i) => i !== idx,
 													);
 													updateResumeData({ experience: updated });
-														const newStates = { ...entryOpenStates };
-														delete newStates[idx];
-														Object.keys(newStates).forEach((key) => {
-															const numKey = Number(key);
-															if (numKey > idx) {
-																newStates[numKey - 1] = newStates[numKey];
-																delete newStates[numKey];
-															}
-														});
-														setEntryOpenStates(newStates);
-													}
-												}}
-												isOpen={entryOpenStates[index] !== false}
-												onOpenChange={(open) => handleEntryOpenChange(index, open)}
-											/>
-										))}
-									</div>
-								</SortableContext>
-							</DndContext>
-						</>
+													const newStates = { ...entryOpenStates };
+													delete newStates[idx];
+													Object.keys(newStates).forEach((key) => {
+														const numKey = Number(key);
+														if (numKey > idx) {
+															newStates[numKey - 1] = newStates[numKey];
+															delete newStates[numKey];
+														}
+													});
+													setEntryOpenStates(newStates);
+												}
+											}}
+											isOpen={entryOpenStates[index] !== false}
+											onOpenChange={(open) =>
+												handleEntryOpenChange(index, open)
+											}
+										/>
+									))}
+								</div>
+							</SortableContext>
+						</DndContext>
 					)}
 				</div>
 			</CollapsibleContent>
-		</>
 		</ErrorBoundary>
 	);
 };

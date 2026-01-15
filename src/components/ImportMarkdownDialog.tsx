@@ -1,16 +1,16 @@
+import { Check, Copy, FileDown, Sparkles } from "lucide-react";
 import { useState } from "react";
+import { resumeToMarkdownPrompt } from "../lib/constants";
+import { Button } from "./ui/button";
 import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
+	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogFooter,
 } from "./ui/dialog";
-import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { Copy, Check, FileDown, Sparkles } from "lucide-react";
-import { resumeToMarkdownPrompt } from "../lib/constants";
 
 interface ImportMarkdownDialogProps {
 	open: boolean;
@@ -49,7 +49,8 @@ export const ImportMarkdownDialog = ({
 						Import from Markdown
 					</DialogTitle>
 					<DialogDescription>
-						Convert your existing resume using AI, then paste the markdown response below.
+						Convert your existing resume using AI, then paste the markdown
+						response below.
 					</DialogDescription>
 				</DialogHeader>
 
@@ -57,11 +58,14 @@ export const ImportMarkdownDialog = ({
 					<div className="space-y-4 p-5 bg-primary/5 rounded-xl border border-primary/10">
 						<div className="space-y-2">
 							<h4 className="text-sm font-bold flex items-center gap-2 text-primary">
-								<span className="flex items-center justify-center size-5 rounded-full bg-primary text-[10px] text-primary-foreground">1</span>
+								<span className="flex items-center justify-center size-5 rounded-full bg-primary text-[10px] text-primary-foreground">
+									1
+								</span>
 								Copy & Use AI Prompt
 							</h4>
 							<p className="text-sm text-muted-foreground leading-relaxed pl-7">
-								Copy our specialized prompt and paste it into ChatGPT or Claude along with your current resume text or PDF.
+								Copy our specialized prompt and paste it into ChatGPT or Claude
+								along with your current resume text or PDF.
 							</p>
 						</div>
 						<div className="pl-7">
@@ -88,7 +92,9 @@ export const ImportMarkdownDialog = ({
 
 					<div className="space-y-3">
 						<h4 className="text-sm font-bold flex items-center gap-2 text-gray-900 dark:text-gray-100">
-							<span className="flex items-center justify-center size-5 rounded-full bg-gray-900 dark:bg-gray-100 text-[10px] text-white dark:text-gray-900">2</span>
+							<span className="flex items-center justify-center size-5 rounded-full bg-gray-900 dark:bg-gray-100 text-[10px] text-white dark:text-gray-900">
+								2
+							</span>
 							Paste AI Response
 						</h4>
 						<div className="pl-7 space-y-2">
@@ -106,7 +112,8 @@ export const ImportMarkdownDialog = ({
 								onChange={(e) => setMarkdownText(e.target.value)}
 							/>
 							<p className="text-[11px] text-muted-foreground italic">
-								Make sure to include all sections (Experience, Education, etc.) from the AI's response.
+								Make sure to include all sections (Experience, Education, etc.)
+								from the AI's response.
 							</p>
 						</div>
 					</div>

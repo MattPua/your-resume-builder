@@ -3,7 +3,6 @@ import {
 	Database,
 	FileText,
 	HelpCircle,
-	Plus,
 	ShieldCheck,
 	Sparkles,
 	User,
@@ -16,12 +15,14 @@ interface EmptyStateProps {
 	onStartFresh: () => void;
 	onLoadSample: () => void;
 	onImportMarkdownText: () => void;
+	hasExistingData?: boolean;
 }
 
 export const EmptyState = ({
 	onStartFresh,
 	onLoadSample,
 	onImportMarkdownText,
+	hasExistingData = false,
 }: EmptyStateProps) => {
 	return (
 		<div className="flex flex-col items-start justify-center min-h-[80vh] px-4">
@@ -52,13 +53,20 @@ export const EmptyState = ({
 							onClick={onStartFresh}
 							size="lg"
 							className="h-auto py-6 flex flex-col items-center gap-3 text-lg"
-							aria-label="Build Your Resume Free"
+							aria-label={
+								hasExistingData ? "Continue Building" : "Build Your Resume Free"
+							}
 						>
-							<Plus className="size-6" />
 							<div className="flex flex-col items-center">
-								<span>Build Your Resume Free</span>
+								<span>
+									{hasExistingData
+										? "Continue Building"
+										: "Build Your Resume Free"}
+								</span>
 								<span className="text-xs font-normal opacity-80">
-									100% Free • No Payment Required
+									{hasExistingData
+										? "Pick up where you left off"
+										: "100% Free • No Payment Required"}
 								</span>
 							</div>
 						</Button>
@@ -89,7 +97,7 @@ export const EmptyState = ({
 									Start Without Signing Up
 								</span>
 								<span className="text-xs font-normal text-gray-500">
-									Paste Markdown or JSON
+									Paste Markdown
 								</span>
 							</div>
 						</Button>
@@ -144,10 +152,6 @@ export const EmptyState = ({
 				</div>
 
 				<div className="pt-2 space-y-4">
-					<p className="text-xs text-gray-500 dark:text-gray-500">
-						Already have a resume? Try the Markdown import to quickly bring your
-						data over.
-					</p>
 					<p className="text-sm text-gray-600 dark:text-gray-400 flex items-center justify-center gap-1.5">
 						<HelpCircle className="size-4" />
 						<span>Have questions? Check out our</span>

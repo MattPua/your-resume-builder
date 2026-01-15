@@ -40,6 +40,15 @@ export const SiteHeader = () => {
 						Home
 					</Link>
 					<Link
+						to="/build"
+						className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
+						activeProps={{
+							className: "text-primary dark:text-primary font-semibold",
+						}}
+					>
+						Build
+					</Link>
+					<Link
 						to="/about"
 						className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary transition-colors"
 						activeProps={{
@@ -78,6 +87,16 @@ export const SiteHeader = () => {
 									}}
 								>
 									Home
+								</Link>
+							</DropdownMenuItem>
+							<DropdownMenuItem asChild>
+								<Link
+									to="/build"
+									activeProps={{
+										className: "bg-accent text-accent-foreground",
+									}}
+								>
+									Build
 								</Link>
 							</DropdownMenuItem>
 							<DropdownMenuItem asChild>

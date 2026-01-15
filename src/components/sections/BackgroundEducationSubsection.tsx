@@ -1,5 +1,5 @@
-import { ChevronsUpDown, Eye, EyeOff, Plus, GraduationCap } from "lucide-react";
-import { useState, useEffect } from "react";
+import { ChevronsUpDown, Eye, EyeOff, GraduationCap, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { EducationEntry, ResumeData } from "../../types/resume";
 import { EducationEntryEditor } from "../EducationEntryEditor";
 import { EmptySectionState } from "../EmptySectionState";
@@ -14,7 +14,9 @@ export const BackgroundEducationSubsection = ({
 	resumeData,
 	updateResumeData,
 }: BackgroundEducationSubsectionProps) => {
-	const [entryOpenStates, setEntryOpenStates] = useState<Record<number, boolean>>({});
+	const [entryOpenStates, setEntryOpenStates] = useState<
+		Record<number, boolean>
+	>({});
 	const isVisible = resumeData.sectionsVisible?.education !== false;
 
 	useEffect(() => {
@@ -29,13 +31,15 @@ export const BackgroundEducationSubsection = ({
 		if (Object.keys(newStates).length !== Object.keys(entryOpenStates).length) {
 			setEntryOpenStates(newStates);
 		}
-	}, [resumeData.education.length]);
+	}, [entryOpenStates, resumeData.education.forEach]);
 
 	const handleEntryOpenChange = (index: number, open: boolean) => {
 		setEntryOpenStates((prev) => ({ ...prev, [index]: open }));
 	};
 
-	const allExpanded = Object.values(entryOpenStates).every((state) => state === true);
+	const allExpanded = Object.values(entryOpenStates).every(
+		(state) => state === true,
+	);
 
 	return (
 		<div className="flex flex-col gap-3">
@@ -128,44 +132,49 @@ export const BackgroundEducationSubsection = ({
 						buttonText="Add Education"
 					/>
 				) : (
-					<>
-						<div className="flex flex-col gap-3">
-							{resumeData.education.map((entry, index) => (
-								<EducationEntryEditor
-									key={index}
-									entry={entry}
-									index={index}
-									onChange={(idx, updatedEntry) => {
-										const updated = [...resumeData.education];
-										updated[idx] = updatedEntry;
-										updateResumeData({ education: updated });
-									}}
-									onDelete={(idx) => {
-										const entry = resumeData.education[idx];
-										const entryTitle = entry.institution || entry.degree || `Education #${idx + 1}`;
-										if (window.confirm(`Are you sure you want to delete "${entryTitle}"?`)) {
+					<div className="flex flex-col gap-3">
+						{resumeData.education.map((entry, index) => (
+							<EducationEntryEditor
+								key={index}
+								entry={entry}
+								index={index}
+								onChange={(idx, updatedEntry) => {
+									const updated = [...resumeData.education];
+									updated[idx] = updatedEntry;
+									updateResumeData({ education: updated });
+								}}
+								onDelete={(idx) => {
+									const entry = resumeData.education[idx];
+									const entryTitle =
+										entry.institution ||
+										entry.degree ||
+										`Education #${idx + 1}`;
+									if (
+										window.confirm(
+											`Are you sure you want to delete "${entryTitle}"?`,
+										)
+									) {
 										const updated = resumeData.education.filter(
 											(_, i) => i !== idx,
 										);
 										updateResumeData({ education: updated });
-											const newStates = { ...entryOpenStates };
-											delete newStates[idx];
-											Object.keys(newStates).forEach((key) => {
-												const numKey = Number(key);
-												if (numKey > idx) {
-													newStates[numKey - 1] = newStates[numKey];
-													delete newStates[numKey];
-												}
-											});
-											setEntryOpenStates(newStates);
-										}
-									}}
-									isOpen={entryOpenStates[index] !== false}
-									onOpenChange={(open) => handleEntryOpenChange(index, open)}
-								/>
-							))}
-						</div>
-					</>
+										const newStates = { ...entryOpenStates };
+										delete newStates[idx];
+										Object.keys(newStates).forEach((key) => {
+											const numKey = Number(key);
+											if (numKey > idx) {
+												newStates[numKey - 1] = newStates[numKey];
+												delete newStates[numKey];
+											}
+										});
+										setEntryOpenStates(newStates);
+									}
+								}}
+								isOpen={entryOpenStates[index] !== false}
+								onOpenChange={(open) => handleEntryOpenChange(index, open)}
+							/>
+						))}
+					</div>
 				)}
 			</div>
 		</div>
