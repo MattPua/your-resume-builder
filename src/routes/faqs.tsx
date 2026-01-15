@@ -19,55 +19,136 @@ import {
 import { Button } from "../components/ui/button";
 import { createSeo } from "../lib/seo";
 
-const FAQS = [
+const FAQ_GROUPS = [
 	{
-		question: "Is my data safe?",
-		answer:
-			"Yes, 100%. Your Resume Builder is a 'local-first' application. This means all your data is stored directly in your browser's local storage. We never upload your personal information to any server, and we don't even have a database to store it in.",
-		icon: <ShieldCheck className="size-5 text-green-600" />,
+		title: "Pricing & Access",
+		items: [
+			{
+				question: "Is this resume builder really free?",
+				answer:
+					"Yes, it's 100% free with no hidden fees, subscriptions, or watermarks. It is an open-source project built for everyone.",
+				icon: <HelpCircle className="size-5 text-pink-600" />,
+			},
+			{
+				question: "Do I need to create an account?",
+				answer:
+					"No, no account or sign-up is required. You can start building your resume immediately without providing an email address.",
+				icon: <Lock className="size-5 text-gray-600" />,
+			},
+			{
+				question: "Are there any limits on usage?",
+				answer:
+					"No, you can create, export, and manage as many resumes as you need without any restrictions or paywalls.",
+				icon: <Zap className="size-5 text-amber-600" />,
+			},
+			{
+				question: "Do I need a credit card to use it?",
+				answer:
+					"No, we don't ask for any payment information, credit card details, or subscriptions. It is completely free for all users.",
+				icon: <HelpCircle className="size-5 text-rose-600" />,
+			},
+		],
 	},
 	{
-		question: "How do I save my progress?",
-		answer:
-			"Your changes are automatically saved to your browser as you type. You can close the window and come back later, and your data will still be there (as long as you don't clear your browser's cache or site data).",
-		icon: <Database className="size-5 text-blue-600" />,
+		title: "Privacy & Security",
+		items: [
+			{
+				question: "Where is my resume data stored?",
+				answer:
+					"Your data is stored locally in your browser's storage. We never upload your personal information to any server.",
+				icon: <Database className="size-5 text-blue-600" />,
+			},
+			{
+				question: "Is it safe to use this builder?",
+				answer:
+					"Yes, it's privacy-first and open-source. Since your data never leaves your device, it's the most secure way to build a resume.",
+				icon: <ShieldCheck className="size-5 text-green-600" />,
+			},
+			{
+				question: "Who owns my resume data?",
+				answer:
+					"You do. Your data stays on your device and is never shared with us or any third parties. You have total control.",
+				icon: <Lock className="size-5 text-indigo-600" />,
+			},
+			{
+				question: "Does the site track my data?",
+				answer:
+					"No, we don't track your personal info or use cookies for advertising. We only use basic site traffic analytics.",
+				icon: <ShieldCheck className="size-5 text-emerald-600" />,
+			},
+		],
 	},
 	{
-		question: "Can I use this on different devices?",
-		answer:
-			"Since your data is stored locally in your browser, it doesn't sync across devices automatically. To move your resume to another device, use the 'Export to JSON' feature in the actions menu, then 'Import from JSON' on your other device.",
-		icon: <Zap className="size-5 text-amber-600" />,
+		title: "Quality & ATS",
+		items: [
+			{
+				question: "Are the resumes ATS-friendly?",
+				answer:
+					"Yes, we use standard professional formatting and high-quality PDF generation that is easily readable by applicant tracking systems.",
+				icon: <FileText className="size-5 text-purple-600" />,
+			},
+			{
+				question: "Does it add watermarks or branding?",
+				answer:
+					"No, your exported resume will never have any watermarks, builder branding, or forced footers of any kind.",
+				icon: <ShieldCheck className="size-5 text-cyan-600" />,
+			},
+			{
+				question: "Can I customize colors and fonts?",
+				answer:
+					"Yes, you can adjust spacing, professional fonts, and accent colors while maintaining a clean, ATS-compliant layout.",
+				icon: <Zap className="size-5 text-orange-600" />,
+			},
+			{
+				question: "Are the templates professional?",
+				answer:
+					"We focus on high-impact, recruiter-approved layouts that prioritize your content and clarity over flashy designs.",
+				icon: <FileText className="size-5 text-sky-600" />,
+			},
+		],
 	},
 	{
-		question: "How does the PDF export work?",
-		answer:
-			"We use a combination of modern web technologies to generate a high-quality PDF directly in your browser. The layout is optimized for A4 paper and ensures that your contact information repeats clearly at the top of every page.",
-		icon: <FileText className="size-5 text-purple-600" />,
-	},
-	{
-		question: "Is it really free?",
-		answer:
-			"Yes, it's completely free and open source. There are no subscriptions, no premium features hidden behind paywalls, and no advertisements. It's built by developers, for everyone.",
-		icon: <HelpCircle className="size-5 text-pink-600" />,
-	},
-	{
-		question: "What is Markdown import?",
-		answer:
-			"Markdown is a simple way to format text. If you already have your resume in a text format or another builder, you can often paste it into our Markdown importer to quickly populate your professional history without starting from scratch.",
-		icon: <Lock className="size-5 text-gray-600" />,
+		title: "Features & Workflow",
+		items: [
+			{
+				question: "Which file formats can I export in?",
+				answer:
+					"You can export as PDF for job applications, and JSON for portable backups and cross-device editing.",
+				icon: <FileText className="size-5 text-emerald-600" />,
+			},
+			{
+				question: "Can I edit my resume later?",
+				answer:
+					"Yes, return to the site on the same browser, or export a JSON backup to import and edit later on any device.",
+				icon: <Database className="size-5 text-cyan-600" />,
+			},
+			{
+				question: "How do I move data to another device?",
+				answer:
+					"Use the 'Export to JSON' feature to save a backup, then use 'Import from JSON' on your other device to continue.",
+				icon: <Zap className="size-5 text-orange-600" />,
+			},
+			{
+				question: "Can I import an existing resume?",
+				answer:
+					"Yes, you can import data via JSON files or paste Markdown text to quickly populate your professional history.",
+				icon: <FileText className="size-5 text-purple-600" />,
+			},
+		],
 	},
 ];
 
 export const Route = createFileRoute("/faqs")({
-	head: () =>
-		createSeo({
+	head: () => {
+		const allItems = FAQ_GROUPS.flatMap((group) => group.items);
+		return createSeo({
 			title: "FAQs",
 			description:
-				"Frequently asked questions about Your Resume Builder - privacy, saving, PDF export, and more.",
+				"Frequently asked questions about Your Resume Builder - privacy, pricing, ATS compatibility, and more.",
 			jsonLd: {
 				"@context": "https://schema.org",
 				"@type": "FAQPage",
-				mainEntity: FAQS.map((faq) => ({
+				mainEntity: allItems.map((faq) => ({
 					"@type": "Question",
 					name: faq.question,
 					acceptedAnswer: {
@@ -76,11 +157,15 @@ export const Route = createFileRoute("/faqs")({
 					},
 				})),
 			},
-		}),
+		});
+	},
 	component: FaqsPage,
 });
 
 function FaqsPage() {
+	const leftGroups = FAQ_GROUPS.filter((_, i) => i % 2 === 0);
+	const rightGroups = FAQ_GROUPS.filter((_, i) => i % 2 !== 0);
+
 	return (
 		<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
 			<SiteHeader />
@@ -101,31 +186,79 @@ function FaqsPage() {
 						</h1>
 					</div>
 
-					{/* FAQ Accordion */}
-					<div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden text-left max-w-xl mx-auto">
-						<Accordion type="single" collapsible className="w-full">
-							{FAQS.map((faq) => (
-								<AccordionItem
-									key={faq.question}
-									value={faq.question}
-									className="last:border-0 w-full"
-								>
-									<AccordionTrigger className="hover:no-underline py-5 px-6">
-										<div className="flex items-center gap-3 w-full min-w-0">
-											<div className="p-2 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shrink-0">
-												{faq.icon}
-											</div>
-											<span className="text-left font-semibold text-gray-900 dark:text-white">
-												{faq.question}
-											</span>
-										</div>
-									</AccordionTrigger>
-									<AccordionContent className="text-gray-600 dark:text-gray-400 leading-relaxed px-6 pl-11 pb-6">
-										{faq.answer}
-									</AccordionContent>
-								</AccordionItem>
+					{/* FAQ Accordion Grid */}
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+						{/* Left Column */}
+						<div className="space-y-8">
+							{leftGroups.map((group) => (
+								<div key={group.title} className="space-y-4">
+									<h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground/70 pl-2">
+										{group.title}
+									</h2>
+									<div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden text-left h-fit">
+										<Accordion type="single" collapsible className="w-full">
+											{group.items.map((faq) => (
+												<AccordionItem
+													key={faq.question}
+													value={faq.question}
+													className="last:border-0 w-full"
+												>
+													<AccordionTrigger className="hover:no-underline py-5 px-6">
+														<div className="flex items-center gap-3 w-full min-w-0">
+															<div className="p-2 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shrink-0">
+																{faq.icon}
+															</div>
+															<span className="text-left font-semibold text-gray-900 dark:text-white">
+																{faq.question}
+															</span>
+														</div>
+													</AccordionTrigger>
+													<AccordionContent className="text-gray-600 dark:text-gray-400 leading-relaxed px-6 pl-11 pb-6">
+														{faq.answer}
+													</AccordionContent>
+												</AccordionItem>
+											))}
+										</Accordion>
+									</div>
+								</div>
 							))}
-						</Accordion>
+						</div>
+
+						{/* Right Column */}
+						<div className="space-y-8">
+							{rightGroups.map((group) => (
+								<div key={group.title} className="space-y-4">
+									<h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground/70 pl-2">
+										{group.title}
+									</h2>
+									<div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden text-left h-fit">
+										<Accordion type="single" collapsible className="w-full">
+											{group.items.map((faq) => (
+												<AccordionItem
+													key={faq.question}
+													value={faq.question}
+													className="last:border-0 w-full"
+												>
+													<AccordionTrigger className="hover:no-underline py-5 px-6">
+														<div className="flex items-center gap-3 w-full min-w-0">
+															<div className="p-2 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shrink-0">
+																{faq.icon}
+															</div>
+															<span className="text-left font-semibold text-gray-900 dark:text-white">
+																{faq.question}
+															</span>
+														</div>
+													</AccordionTrigger>
+													<AccordionContent className="text-gray-600 dark:text-gray-400 leading-relaxed px-6 pl-11 pb-6">
+														{faq.answer}
+													</AccordionContent>
+												</AccordionItem>
+											))}
+										</Accordion>
+									</div>
+								</div>
+							))}
+						</div>
 					</div>
 
 					{/* Support / GitHub */}

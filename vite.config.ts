@@ -15,7 +15,17 @@ const config = defineConfig({
 			projects: ["./tsconfig.json"],
 		}),
 		tailwindcss(),
-		tanstackStart(),
+		tanstackStart({
+			prerender: {
+				enabled: true,
+				autoStaticPathsDiscovery: true,
+				crawlLinks: true,
+			},
+			sitemap: {
+				enabled: true,
+				host: "https://your-resume-builder.com",
+			},
+		}),
 		viteReact({
 			babel: {
 				plugins: ["babel-plugin-react-compiler"],
