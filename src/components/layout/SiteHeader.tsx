@@ -18,7 +18,7 @@ import logo from "../ui/logo.webp";
 export const SiteHeader = () => {
 	return (
 		<header className="w-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 no-print">
-			<div className="max-w-[1600px] mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
+			<div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8 h-16 flex items-center justify-between">
 				<Link to="/" className="flex items-center gap-3 group cursor-pointer">
 					<img
 						src={logo}

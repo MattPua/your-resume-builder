@@ -286,7 +286,7 @@ export const ResumeBuilder = () => {
 						onScrollToSection={scrollToSection}
 					/>
 
-					<main className="flex-1 lg:pl-20 px-4 pt-8 pb-16">
+					<main className="flex-1 lg:pl-20 px-4 pt-8 pb-16 w-full max-w-[1800px] mx-auto">
 						<AppControlsHeader
 							resumeData={resumeData}
 							updateResumeData={updateResumeData}
@@ -305,7 +305,7 @@ export const ResumeBuilder = () => {
 							isExporting={isExporting}
 						/>
 
-						<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+						<div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] xl:grid-cols-[1fr_1.5fr] gap-6">
 							<section
 								className="space-y-6 no-print order-2 lg:order-1"
 								aria-label="Resume Editor"

@@ -9,8 +9,8 @@ export const SiteFooter = () => {
 	const currentYear = new Date().getFullYear();
 
 	return (
-		<footer className="w-full bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-4 px-4 lg:px-8 no-print mt-auto">
-			<div className="max-w-[1600px] mx-auto flex flex-col gap-4">
+		<footer className="w-full bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 py-4 no-print mt-auto">
+			<div className="w-full max-w-[1800px] mx-auto px-4 lg:px-8 flex flex-col gap-4">
 				<div className="flex items-center justify-between w-full">
 					<div className="flex flex-col gap-1">
 						<Link
