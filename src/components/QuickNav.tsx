@@ -13,6 +13,7 @@ import {
 	RotateCcw,
 	Search,
 	ChevronLeft,
+	Layout,
 	Palette,
 	Type,
 } from "lucide-react";
@@ -78,7 +79,7 @@ export const QuickNav = ({
 }: QuickNavProps) => {
 	const [open, setOpen] = React.useState(false);
 	const [search, setSearch] = React.useState("");
-	const [view, setView] = React.useState<"main" | "fonts" | "colors">("main");
+	const [view, setView] = React.useState<"main" | "fonts" | "colors" | "layout">("main");
 
 	React.useEffect(() => {
 		const down = (e: KeyboardEvent) => {
@@ -234,6 +235,21 @@ export const QuickNav = ({
 										Enter
 									</Kbd>
 								</CommandItem>
+								<CommandItem
+									onSelect={() => {
+										setView("layout");
+										setSearch("");
+									}}
+									className="flex items-center gap-2 cursor-pointer justify-between"
+								>
+									<div className="flex items-center gap-2">
+										<Layout className="size-4" />
+										<span>Change Layout...</span>
+									</div>
+									<Kbd className="bg-transparent border-none text-[10px] opacity-40">
+										Enter
+									</Kbd>
+								</CommandItem>
 							</CommandGroup>
 							<CommandSeparator />
 
@@ -346,9 +362,9 @@ export const QuickNav = ({
 						</>
 					)}
 
-					{view === "colors" && (
+					{view === "layout" && (
 						<>
-							<CommandGroup heading="Select Header Color">
+							<CommandGroup heading="Select Layout Mode">
 								<CommandItem
 									onSelect={() => setView("main")}
 									className="flex items-center gap-2 cursor-pointer text-muted-foreground"
@@ -360,27 +376,36 @@ export const QuickNav = ({
 									</Kbd>
 								</CommandItem>
 								<CommandSeparator className="my-1" />
-								{COLORS.map((color) => (
-									<CommandItem
-										key={color.name}
-										onSelect={() => {
-											onUpdateData?.({ sectionHeaderTextColor: color.value });
-											setOpen(false);
-										}}
-										className="flex items-center gap-2 cursor-pointer"
-									>
-										<Palette className="size-4" />
-										<div className="flex items-center gap-2 flex-1">
-											<span>{color.name}</span>
-											{color.value && (
-												<div
-													className="size-3 rounded-full border border-gray-200 ml-auto"
-													style={{ backgroundColor: color.value }}
-												/>
-											)}
-										</div>
-									</CommandItem>
-								))}
+								<CommandItem
+									onSelect={() => {
+										onUpdateData?.({ layoutMode: "compact" });
+										setOpen(false);
+									}}
+									className="flex items-center gap-2 cursor-pointer"
+								>
+									<Layout className="size-4 opacity-70" />
+									<span>Compact</span>
+								</CommandItem>
+								<CommandItem
+									onSelect={() => {
+										onUpdateData?.({ layoutMode: "default" });
+										setOpen(false);
+									}}
+									className="flex items-center gap-2 cursor-pointer"
+								>
+									<Layout className="size-4" />
+									<span>Default</span>
+								</CommandItem>
+								<CommandItem
+									onSelect={() => {
+										onUpdateData?.({ layoutMode: "comfortable" });
+										setOpen(false);
+									}}
+									className="flex items-center gap-2 cursor-pointer"
+								>
+									<Layout className="size-4 scale-110" />
+									<span>Comfortable</span>
+								</CommandItem>
 							</CommandGroup>
 						</>
 					)}
