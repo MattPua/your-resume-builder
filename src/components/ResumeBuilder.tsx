@@ -34,6 +34,7 @@ import type {
 	EducationEntry,
 	ExperienceEntry,
 	SideProjectEntry,
+	VolunteeringEntry,
 } from "../types/resume";
 
 const DEFAULT_SECTION_ORDER: (
@@ -167,12 +168,30 @@ export const ResumeBuilder = () => {
 	};
 
 	const scrollToSection = (sectionId: string) => {
+		// Ensure the section is expanded before scrolling/focusing
+		if (sectionId === "header") setIsHeaderOpen(true);
+		else if (sectionId === "experience") setIsExperienceOpen(true);
+		else if (sectionId === "background") setIsBackgroundOpen(true);
+		else if (sectionId === "sideProjects") setIsSideProjectsOpen(true);
+		else if (sectionId === "volunteering") setIsVolunteeringOpen(true);
+		else if (sectionId === "personal") setIsPersonalOpen(true);
+
 		const element = document.getElementById(`section-${sectionId}`);
 		if (element) {
 			const yOffset = -100;
 			const y =
 				element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 			window.scrollTo({ top: y, behavior: "smooth" });
+
+			// Auto-focus the first input or textarea in the section
+			setTimeout(() => {
+				const firstInput = element.querySelector("input, textarea") as
+					| HTMLInputElement
+					| HTMLTextAreaElement;
+				if (firstInput) {
+					firstInput.focus();
+				}
+			}, 100);
 		}
 	};
 
@@ -299,6 +318,22 @@ export const ResumeBuilder = () => {
 		scrollToSection("sideProjects");
 	};
 
+	const handleAddVolunteering = () => {
+		const newEntry: VolunteeringEntry = {
+			role: "",
+			organization: "",
+			startDate: "",
+			endDate: "",
+			bulletPoints: "",
+			visible: true,
+		};
+		updateResumeData({
+			volunteering: [newEntry, ...resumeData.volunteering],
+		});
+		setIsVolunteeringOpen(true);
+		scrollToSection("volunteering");
+	};
+
 	if (isLoading) {
 		return (
 			<div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -348,6 +383,7 @@ export const ResumeBuilder = () => {
 							onAddExperience={handleAddExperience}
 							onAddEducation={handleAddEducation}
 							onAddProject={handleAddProject}
+							onAddVolunteering={handleAddVolunteering}
 							onCollapseAll={() => handleToggleAllSections(false)}
 							onExpandAll={() => handleToggleAllSections(true)}
 							onExportPDF={handleExportPDF}

@@ -55,6 +55,7 @@ interface QuickNavProps {
 	onAddExperience?: () => void;
 	onAddEducation?: () => void;
 	onAddProject?: () => void;
+	onAddVolunteering?: () => void;
 	onCollapseAll?: () => void;
 	onExpandAll?: () => void;
 	onExportPDF?: () => void;
@@ -70,6 +71,7 @@ export const QuickNav = ({
 	onAddExperience,
 	onAddEducation,
 	onAddProject,
+	onAddVolunteering,
 	onCollapseAll,
 	onExpandAll,
 	onExportPDF,
@@ -105,11 +107,17 @@ export const QuickNav = ({
 		}
 	}, [open]);
 
-	const visibleSections = ["header", ...sectionOrder].filter(
-		(sectionId) =>
-			sectionId === "header" ||
-			sectionsVisible?.[sectionId as keyof typeof sectionsVisible] !== false,
-	);
+	const visibleSections = ["header", ...sectionOrder].filter((sectionId) => {
+		if (sectionId === "header") return true;
+		if (sectionId === "background") {
+			return (
+				sectionsVisible?.education !== false || sectionsVisible?.skills !== false
+			);
+		}
+		return (
+			sectionsVisible?.[sectionId as keyof typeof sectionsVisible] !== false
+		);
+	});
 
 	const handleSelect = (sectionId: string) => {
 		onSelectSection(sectionId);
@@ -164,44 +172,56 @@ export const QuickNav = ({
 
 					{view === "main" && (
 						<>
-							<CommandGroup heading="Quick Add">
-								{onAddExperience && (
-									<CommandItem
-										onSelect={() => {
-											onAddExperience();
-											setOpen(false);
-										}}
-										className="flex items-center gap-2 cursor-pointer"
-									>
-										<Plus className="size-4" />
-										<span>Add Work Experience</span>
-									</CommandItem>
-								)}
-								{onAddEducation && (
-									<CommandItem
-										onSelect={() => {
-											onAddEducation();
-											setOpen(false);
-										}}
-										className="flex items-center gap-2 cursor-pointer"
-									>
-										<Plus className="size-4" />
-										<span>Add Education</span>
-									</CommandItem>
-								)}
-								{onAddProject && (
-									<CommandItem
-										onSelect={() => {
-											onAddProject();
-											setOpen(false);
-										}}
-										className="flex items-center gap-2 cursor-pointer"
-									>
-										<Plus className="size-4" />
-										<span>Add Side Project</span>
-									</CommandItem>
-								)}
-							</CommandGroup>
+					<CommandGroup heading="Quick Add">
+						{onAddExperience && sectionsVisible?.experience !== false && (
+							<CommandItem
+								onSelect={() => {
+									onAddExperience();
+									setOpen(false);
+								}}
+								className="flex items-center gap-2 cursor-pointer"
+							>
+								<Plus className="size-4" />
+								<span>Add Work Experience</span>
+							</CommandItem>
+						)}
+						{onAddEducation && sectionsVisible?.education !== false && (
+							<CommandItem
+								onSelect={() => {
+									onAddEducation();
+									setOpen(false);
+								}}
+								className="flex items-center gap-2 cursor-pointer"
+							>
+								<Plus className="size-4" />
+								<span>Add Education</span>
+							</CommandItem>
+						)}
+						{onAddProject && sectionsVisible?.sideProjects !== false && (
+							<CommandItem
+								onSelect={() => {
+									onAddProject();
+									setOpen(false);
+								}}
+								className="flex items-center gap-2 cursor-pointer"
+							>
+								<Plus className="size-4" />
+								<span>Add Side Project</span>
+							</CommandItem>
+						)}
+						{onAddVolunteering && sectionsVisible?.volunteering !== false && (
+							<CommandItem
+								onSelect={() => {
+									onAddVolunteering();
+									setOpen(false);
+								}}
+								className="flex items-center gap-2 cursor-pointer"
+							>
+								<Plus className="size-4" />
+								<span>Add Volunteering</span>
+							</CommandItem>
+						)}
+					</CommandGroup>
 							<CommandSeparator />
 
 							<CommandGroup heading="Appearance">
@@ -323,7 +343,7 @@ export const QuickNav = ({
 											className="flex items-center gap-2 cursor-pointer"
 										>
 											<Icon className="size-4" />
-											<span>{title}</span>
+											<span>Jump to {title}</span>
 										</CommandItem>
 									);
 								})}
@@ -356,6 +376,45 @@ export const QuickNav = ({
 									>
 										<Type className="size-4" />
 										<span style={{ fontFamily: font.value }}>{font.name}</span>
+									</CommandItem>
+								))}
+							</CommandGroup>
+						</>
+					)}
+
+					{view === "colors" && (
+						<>
+							<CommandGroup heading="Select Header Color">
+								<CommandItem
+									onSelect={() => setView("main")}
+									className="flex items-center gap-2 cursor-pointer text-muted-foreground"
+								>
+									<ChevronLeft className="size-4" />
+									<span>Back to main menu</span>
+									<Kbd className="ml-auto bg-transparent border-none text-[10px] opacity-40">
+										Esc
+									</Kbd>
+								</CommandItem>
+								<CommandSeparator className="my-1" />
+								{COLORS.map((color) => (
+									<CommandItem
+										key={color.name}
+										onSelect={() => {
+											onUpdateData?.({ sectionHeaderTextColor: color.value });
+											setOpen(false);
+										}}
+										className="flex items-center gap-2 cursor-pointer"
+									>
+										<Palette className="size-4" />
+										<div className="flex items-center gap-2 flex-1">
+											<span>{color.name}</span>
+											{color.value && (
+												<div
+													className="size-3 rounded-full border border-gray-200 ml-auto"
+													style={{ backgroundColor: color.value }}
+												/>
+											)}
+										</div>
 									</CommandItem>
 								))}
 							</CommandGroup>
