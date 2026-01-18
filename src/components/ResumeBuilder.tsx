@@ -112,6 +112,62 @@ const FONTS = [
 		value:
 			"ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
 	},
+	{
+		name: "Arial",
+		value: "Arial, sans-serif",
+	},
+	{
+		name: "Helvetica",
+		value: "Helvetica, Arial, sans-serif",
+	},
+	{
+		name: "Times New Roman",
+		value: "'Times New Roman', Times, serif",
+	},
+	{
+		name: "Georgia",
+		value: "Georgia, serif",
+	},
+	{
+		name: "Verdana",
+		value: "Verdana, sans-serif",
+	},
+	{
+		name: "Courier New",
+		value: "'Courier New', Courier, monospace",
+	},
+	{
+		name: "Tahoma",
+		value: "Tahoma, sans-serif",
+	},
+	{
+		name: "Trebuchet MS",
+		value: "'Trebuchet MS', sans-serif",
+	},
+	{
+		name: "Palatino",
+		value: "Palatino, 'Palatino Linotype', 'Book Antiqua', serif",
+	},
+	{
+		name: "Garamond",
+		value: "Garamond, 'Book Antiqua', serif",
+	},
+	{
+		name: "Book Antiqua",
+		value: "'Book Antiqua', Palatino, serif",
+	},
+	{
+		name: "Lucida Console",
+		value: "'Lucida Console', Monaco, monospace",
+	},
+	{
+		name: "Monaco",
+		value: "Monaco, 'Courier New', monospace",
+	},
+	{
+		name: "Impact",
+		value: "Impact, Charcoal, sans-serif",
+	},
 ];
 
 export const ResumeBuilder = () => {
