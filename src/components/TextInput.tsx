@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Field, FieldContent, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 
@@ -19,9 +19,12 @@ export const TextInput = ({
 	type = "text",
 	id,
 }: TextInputProps) => {
-	const inputId =
-		id ||
-		`text-input-${(label || "field").toLowerCase().replace(/\s+/g, "-")}-${Math.random().toString(36).substring(2, 9)}`;
+	const inputId = useMemo(
+		() =>
+			id ||
+			`text-input-${(label || "field").toLowerCase().replace(/\s+/g, "-")}-${Math.random().toString(36).substring(2, 9)}`,
+		[id, label],
+	);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const isUndoRedoRef = useRef(false);
 
@@ -57,16 +60,8 @@ export const TextInput = ({
 		}
 	};
 
-	// Sync value when prop changes (but not during undo/redo)
-	useEffect(() => {
-		if (
-			inputRef.current &&
-			!isUndoRedoRef.current &&
-			inputRef.current.value !== value
-		) {
-			inputRef.current.value = value;
-		}
-	}, [value]);
+	// No need to sync value - React handles it with controlled component
+	// The value prop is already being used, so React will update it automatically
 
 	return (
 		<Field orientation="vertical">
@@ -83,7 +78,7 @@ export const TextInput = ({
 					ref={inputRef}
 					id={inputId}
 					type={type}
-					defaultValue={value}
+					value={value}
 					onChange={handleChange}
 					onInput={handleInput}
 					onKeyDown={handleKeyDown}

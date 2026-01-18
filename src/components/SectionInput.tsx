@@ -1,4 +1,10 @@
-import { forwardRef, useCallback, useEffect, useRef } from "react";
+import {
+	forwardRef,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+} from "react";
 import { Field, FieldContent, FieldLabel } from "./ui/field";
 import { Textarea } from "./ui/textarea";
 
@@ -12,9 +18,12 @@ interface SectionInputProps {
 
 export const SectionInput = forwardRef<HTMLTextAreaElement, SectionInputProps>(
 	({ label, value, onChange, placeholder = "Enter markdown...", id }, ref) => {
-		const textareaId =
-			id ||
-			`section-input-${(label || "field").toLowerCase().replace(/\s+/g, "-")}-${Math.random().toString(36).substring(2, 9)}`;
+		const textareaId = useMemo(
+			() =>
+				id ||
+				`section-input-${(label || "field").toLowerCase().replace(/\s+/g, "-")}-${Math.random().toString(36).substring(2, 9)}`,
+			[id, label],
+		);
 		const textareaRef = useRef<HTMLTextAreaElement>(null);
 		const isUndoRedoRef = useRef(false);
 
@@ -60,20 +69,10 @@ export const SectionInput = forwardRef<HTMLTextAreaElement, SectionInputProps>(
 			updateHeight();
 		};
 
-		// Sync value when prop changes (but not during undo/redo)
-		// Always update if the prop value differs from what's in the textarea
-		// This ensures swaps work correctly even with empty strings
+		// Update height when value changes (for auto-resize)
 		useEffect(() => {
-			if (textareaRef.current && !isUndoRedoRef.current) {
-				const normalizedValue = value ?? "";
-				const currentTextareaValue = textareaRef.current.value ?? "";
-
-				// Always update if prop value differs from textarea value
-				// Direct string comparison handles empty strings correctly
-				if (currentTextareaValue !== normalizedValue) {
-					textareaRef.current.value = normalizedValue;
-					updateHeight();
-				}
+			if (textareaRef.current) {
+				updateHeight();
 			}
 		}, [value, updateHeight]);
 
@@ -98,7 +97,7 @@ export const SectionInput = forwardRef<HTMLTextAreaElement, SectionInputProps>(
 								ref.current = node;
 							}
 						}}
-						defaultValue={value}
+						value={value}
 						onChange={handleChange}
 						onInput={handleInput}
 						onKeyDown={handleKeyDown}

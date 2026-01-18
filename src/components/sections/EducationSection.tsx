@@ -86,7 +86,7 @@ export const EducationSection = ({
 						<div className="flex flex-col gap-4">
 							{resumeData.education.map((entry, index) => (
 								<EducationEntryEditor
-									key={`${entry.institution}-${entry.degree}-${index}`}
+									key={`education-${index}`}
 									entry={entry}
 									index={index}
 									onChange={(idx, updatedEntry) => {

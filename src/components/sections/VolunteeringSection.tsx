@@ -199,7 +199,7 @@ export const VolunteeringSection = ({
 								<div className="flex flex-col gap-3">
 									{resumeData.volunteering.map((entry, index) => (
 										<SortableVolunteeringEntry
-											key={`vol-${entry.organization}-${entry.role}-${index}`}
+											key={`volunteering-${index}`}
 											entry={entry}
 											index={index}
 											onChange={(idx, updatedEntry) => {

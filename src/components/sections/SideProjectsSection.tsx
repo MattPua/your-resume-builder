@@ -200,7 +200,7 @@ export const SideProjectsSection = ({
 								<div className="flex flex-col gap-3">
 									{resumeData.sideProjects.map((entry, index) => (
 										<SortableSideProjectEntry
-											key={`proj-${entry.title}-${index}`}
+											key={`sideproject-${index}`}
 											entry={entry}
 											index={index}
 											onChange={(idx, updatedEntry) => {

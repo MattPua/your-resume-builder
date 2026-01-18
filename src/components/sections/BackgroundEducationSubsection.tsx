@@ -1,4 +1,11 @@
-import { ChevronsDown, ChevronsUp, Eye, EyeOff, GraduationCap, Plus } from "lucide-react";
+import {
+	ChevronsDown,
+	ChevronsUp,
+	Eye,
+	EyeOff,
+	GraduationCap,
+	Plus,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import type { EducationEntry, ResumeData } from "../../types/resume";
 import { EducationEntryEditor } from "../EducationEntryEditor";
@@ -137,7 +144,7 @@ export const BackgroundEducationSubsection = ({
 				) : (
 					<div className="flex flex-col gap-3">
 						{resumeData.education.map((entry, index) => (
-							<div key={`edu-${entry.institution}-${entry.degree}-${index}`} id={`education-${index}`}>
+							<div key={`education-${index}`} id={`education-${index}`}>
 								<EducationEntryEditor
 									entry={entry}
 									index={index}
